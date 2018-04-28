@@ -1,12 +1,9 @@
 package drive.fitness.controller;
 
 import org.springframework.web.bind.annotation.RestController;
-
-import drive.fitness.dao.TestDao;
-import drive.fitness.models.Test;
-
+import drive.fitness.dao.UserDao;
+import drive.fitness.models.User;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class HomeController {
 	
 	@Autowired
-	private TestDao testDao;
+	private UserDao userDao;
 
-    @RequestMapping(value = "/test", method= RequestMethod.GET)
-    public List<Test> index() {
-        return (List<Test>) testDao.findAll();
+    @RequestMapping(value = "/getAllUsers", method= RequestMethod.GET)
+    public List<User> index() {
+        return (List<User>) userDao.findAll();
     }
 
 }
