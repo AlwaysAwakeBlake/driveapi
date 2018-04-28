@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @RestController
-public class HomeController {
+public class UserController {
 	
 	@Autowired
 	private UserDao userDao;
 
     @RequestMapping(value = "/getAllUsers", method= RequestMethod.GET)
-    public List<User> index() {
+    public List<User> getAllUsers() {
         return (List<User>) userDao.findAll();
     }
 
