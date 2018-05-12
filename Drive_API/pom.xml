@@ -7,7 +7,7 @@
 	<groupId>drive.fitness</groupId>
 	<artifactId>Drive_API</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>Drive_API</name>
 	<description>API Project for Drive Fitness</description>
