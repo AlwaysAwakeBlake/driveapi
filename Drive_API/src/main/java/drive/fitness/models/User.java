@@ -8,6 +8,35 @@ import javax.persistence.Table;
 @Entity
 @Table(name="users")
 public class User {
+	
+	@Id
+	@Column(name="id")
+	private int id;
+	
+	@Column(name="`username`")
+	private String username;
+	
+	@Column(name="`email`")
+	private String email;
+
+	@Column(name="`location`")
+	private String location;
+	
+	@Column(name="`age`")
+	private Integer age;
+	
+	@Column(name="`height`")
+	private String height;
+	
+	@Column(name="`weight`")
+	private Integer weight;
+	
+	@Column(name="`profile_pic_s3_ref`")
+	private String profilePicRef;
+	
+	@Column(name="`gym`")
+	private String gym;
+
 	public int getId() {
 		return id;
 	}
@@ -44,7 +73,7 @@ public class User {
 		return age;
 	}
 
-	public void setAge(int age) {
+	public void setAge(Integer age) {
 		this.age = age;
 	}
 
@@ -60,40 +89,24 @@ public class User {
 		return weight;
 	}
 
-	public void setWeight(int weight) {
+	public void setWeight(Integer weight) {
 		this.weight = weight;
 	}
-
-	public String getProfilePic() {
-		return profilePic;
+	
+	public String getProfilePicRef() {
+		return profilePicRef;
 	}
 
-	public void setProfilePic(String profilePic) {
-		this.profilePic = profilePic;
+	public void setProfilePicRef(String profilePicRef) {
+		this.profilePicRef = profilePicRef;
 	}
 
-	@Id
-	@Column(name="id")
-	private int id;
-	
-	@Column(name="username")
-	private String username;
-	
-	@Column(name="email")
-	private String email;
-	
-	@Column(name="location")
-	private String location;
-	
-	@Column(name="age", nullable = true)
-	private Integer age;
-	
-	@Column(name="height")
-	private String height;
-	
-	@Column(name="weight", nullable = true)
-	private Integer weight;
-	
-	@Column(name="profile_pic_s3_ref")
-	private String profilePic;
+	public String getGym() {
+		return gym;
+	}
+
+	public void setGym(String gym) {
+		this.gym = gym;
+	}
+
 }
