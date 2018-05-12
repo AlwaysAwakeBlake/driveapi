@@ -92,7 +92,7 @@ public class User {
 	public void setWeight(Integer weight) {
 		this.weight = weight;
 	}
-
+	
 	public String getProfilePicRef() {
 		return profilePicRef;
 	}
@@ -108,4 +108,5 @@ public class User {
 	public void setGym(String gym) {
 		this.gym = gym;
 	}
+
 }
