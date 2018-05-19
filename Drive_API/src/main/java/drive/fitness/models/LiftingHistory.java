@@ -3,6 +3,7 @@ package drive.fitness.models;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -23,9 +24,9 @@ public class LiftingHistory {
 	private int reps;
 	
 	@Column(name="user_id")
-	private User user;
+	private int user;
 	
-	@Column(name="exercise_id")
+	@ManyToOne
 	private Exercise exercise;
 	
 	public int getId() {
@@ -60,11 +61,11 @@ public class LiftingHistory {
 		this.reps = reps;
 	}
 	
-	public User getUser() {
+	public int getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(int user) {
 		this.user = user;
 	}
 	

@@ -11,24 +11,24 @@ public class Competing {
 	
 	@Id
 	@Column(name="user_id")
-	private User user;
+	private int user;
 	
 	@Column(name="`competing_users_id`")
-	private User competingUser;
+	private int competingUser;
 	
-	public User getUser() {
+	public int getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(int user) {
 		this.user = user;
 	}
 
-	public User getCompetingUser() {
+	public int getCompetingUser() {
 		return user;
 	}
 
-	public void setCompetingUser(User user) {
+	public void setCompetingUser(int user) {
 		this.user = user;
 	}
 }

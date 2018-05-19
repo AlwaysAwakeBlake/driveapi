@@ -30,6 +30,8 @@ public class UserController {
         return (User) userDao.findByUsername(username);
     }
     
+    
+    
     @RequestMapping(value = "/getUserCompeting", method= RequestMethod.GET)
     public User getUserCompeting(@RequestParam(value = "username", defaultValue = "test") String username) {
         return (User) userDao.getUserCompeting(username);

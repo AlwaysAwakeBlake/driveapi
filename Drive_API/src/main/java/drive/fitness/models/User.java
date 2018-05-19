@@ -3,10 +3,21 @@ package drive.fitness.models;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedStoredProcedureQueries;
+import javax.persistence.NamedStoredProcedureQuery;
+import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
+import javax.persistence.ParameterMode;
 
 @Entity
 @Table(name="users")
+@NamedStoredProcedureQueries({
+	   @NamedStoredProcedureQuery(name = "get_User_Competing", 
+	                              procedureName = "getUserCompeting",
+	                              parameters = {
+	                                 @StoredProcedureParameter(mode = ParameterMode.IN, name = "user_name_param", type = String.class)
+	                              })
+})
 public class User {
 	
 	@Id
