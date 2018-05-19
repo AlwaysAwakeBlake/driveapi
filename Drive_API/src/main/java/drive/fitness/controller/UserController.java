@@ -5,6 +5,8 @@ import drive.fitness.dao.*;
 import drive.fitness.models.*;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +29,17 @@ public class UserController {
     
     @RequestMapping(value = "/getUserByUsername", method= RequestMethod.GET)
     public User getUserByUsername(@RequestParam(value = "username", defaultValue = "test") String username) {
-        return (User) userDao.findByUsername(username);
+    	User user = userDao.findByUsername(username);
+    	if (user == null) {
+    		user = new User();
+    		user.setUsername("alreadyexists");
+    	}
+        return user;
+    }
+    
+    @PostMapping(value = "/createUser")
+    public void createUser(@RequestBody User user) {
+    	System.out.println(user.getUsername());
+        userDao.save(user);
     }
 }
