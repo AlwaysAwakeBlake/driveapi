@@ -47,5 +47,14 @@ public class UserControllerTest {
 		 
 		 Assert.assertEquals(users.size(), userController.getAllUsers().size());
 	}
+	
+	@Test
+	public void getUserCompeting() {	
+		List<User> users = new ArrayList<User>();
+		
+		 when(mockUserDao.getUserCompeting("TD")).thenReturn(users);
+		 
+		 Assert.assertEquals("", userController.getUserCompeting("TD"));
+	}
 
 }

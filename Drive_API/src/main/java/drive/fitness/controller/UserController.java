@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 public class UserController {
-	
+
 	@Autowired
 	private UserDao userDao;
 
@@ -28,5 +28,10 @@ public class UserController {
     @RequestMapping(value = "/getUserByUsername", method= RequestMethod.GET)
     public User getUserByUsername(@RequestParam(value = "username", defaultValue = "test") String username) {
         return (User) userDao.findByUsername(username);
+    }
+    
+    @RequestMapping(value = "/getUserCompeting", method= RequestMethod.GET)
+    public User getUserCompeting(@RequestParam(value = "username", defaultValue = "test") String username) {
+        return (User) userDao.getUserCompeting(username);
     }
 }
