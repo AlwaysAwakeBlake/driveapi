@@ -13,6 +13,6 @@ public interface UserDao extends CrudRepository<User, Long>{
 	@Query("FROM User where username=:userName")
 	public User findByUsername(@Param("userName") String userName);
 
-    @Procedure(name = "get_User_Competing")
+    @Procedure(name = "getUserCompeting")
     public List<User> getUserCompeting(@Param("user_name_param") String username);
 }
