@@ -19,6 +19,7 @@ public class MuscleGroup {
 	@Column(name="`muscle_group_name`")
 	private String muscleGroupName;
 
+	
 	public int getId() {
 		return id;
 	}
@@ -27,7 +28,8 @@ public class MuscleGroup {
 		this.id = id;
 	}
 
-	public String getMuscleGroupName() {
+	public String getMuscleGroupeName() {
+
 		return muscleGroupName;
 	}
 
@@ -35,4 +37,4 @@ public class MuscleGroup {
 		this.muscleGroupName = muscleGroupName;
 	}
 }
-	
+

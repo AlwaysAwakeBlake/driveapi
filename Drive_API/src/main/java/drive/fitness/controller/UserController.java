@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 public class UserController {
-	
+
 	@Autowired
 	private UserDao userDao;
 
@@ -41,5 +41,10 @@ public class UserController {
     public void createUser(@RequestBody User user) {
     	System.out.println(user.getUsername());
         userDao.save(user);
+    }
+    
+    @RequestMapping(value = "/getUserCompeting", method= RequestMethod.GET)
+    public User getUserCompeting(@RequestParam(value = "username", defaultValue = "test") String username) {
+        return (User) userDao.getUserCompeting(username);
     }
 }
