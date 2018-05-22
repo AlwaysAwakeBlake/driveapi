@@ -11,13 +11,13 @@ import javax.persistence.ParameterMode;
 
 @Entity
 @Table(name="users")
-@NamedStoredProcedureQueries({
-	   @NamedStoredProcedureQuery(name = "get_User_Competing", 
-	                              procedureName = "getUserCompeting",
-	                              parameters = {
-	                                 @StoredProcedureParameter(mode = ParameterMode.IN, name = "user_name_param", type = String.class)
-	                              })
-})
+//@NamedStoredProcedureQueries({
+//	   @NamedStoredProcedureQuery(name = "get_User_Competing", 
+//	                              procedureName = "getUserCompeting",
+//	                              parameters = {
+//	                                 @StoredProcedureParameter(mode = ParameterMode.IN, name = "user_name_param", type = String.class)
+//	                              })
+//})
 public class User {
 	
 	@Id

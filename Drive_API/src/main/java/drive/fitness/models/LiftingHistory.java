@@ -1,13 +1,36 @@
 package drive.fitness.models;
 
+import java.math.BigInteger;
+
 import javax.persistence.Column;
+
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedStoredProcedureQueries;
+import javax.persistence.NamedStoredProcedureQuery;
+import javax.persistence.StoredProcedureParameter;
+import javax.persistence.ParameterMode;
+
 import javax.persistence.Table;
 
 @Entity
 @Table(name="lifting_history")
+@NamedStoredProcedureQueries({
+	   @NamedStoredProcedureQuery(name = "get_user_gains_week", 
+	                              procedureName = "get_user_gains_week",
+	                              parameters = {
+	                                 @StoredProcedureParameter(mode = ParameterMode.IN, name = "user_id", type = int.class),
+	                                 @StoredProcedureParameter(mode = ParameterMode.OUT, name = "week_gains", type = long.class)
+	                              }),
+	   @NamedStoredProcedureQuery(name = "get_user_gains_month", 
+							      procedureName = "get_user_gains_month",
+							      parameters = {
+							          @StoredProcedureParameter(mode = ParameterMode.IN, name = "user_id", type = int.class),
+							          @StoredProcedureParameter(mode = ParameterMode.OUT, name = "month_gains", type = long.class)
+							      })
+})
 public class LiftingHistory {
 	
 	@Id
@@ -17,6 +40,9 @@ public class LiftingHistory {
 	@Column(name="date")
 	private String date;
 	
+	@Column(name="gains")
+	private int gains;
+	
 	@Column(name="weight")
 	private int weight;
 	
@@ -24,7 +50,7 @@ public class LiftingHistory {
 	private int reps;
 	
 	@Column(name="user_id")
-	private int user;
+	private int userId;
 	
 	@ManyToOne
 	private Exercise exercise;
@@ -53,6 +79,14 @@ public class LiftingHistory {
 		this.weight = weight;
 	}
 	
+	public int getGains() {
+		return gains;
+	}
+
+	public void setGains(int gains) {
+		this.gains = gains;
+	}
+	
 	public int getReps() {
 		return reps;
 	}
@@ -61,12 +95,12 @@ public class LiftingHistory {
 		this.reps = reps;
 	}
 	
-	public int getUser() {
-		return user;
+	public int getUserId() {
+		return userId;
 	}
 
-	public void setUser(int user) {
-		this.user = user;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 	
 	public Exercise getExercise() {

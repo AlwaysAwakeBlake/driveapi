@@ -7,7 +7,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import drive.fitness.models.Competing;
+import drive.fitness.models.User;
 
-public interface CompetingDao extends CrudRepository<Competing, Long>{ 
+public interface CompetingDao extends CrudRepository<Competing, Integer>{	
 
 }
