@@ -1,8 +1,13 @@
 package drive.fitness.models;
 
 import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedStoredProcedureQueries;
+import javax.persistence.NamedStoredProcedureQuery;
+import javax.persistence.StoredProcedureParameter;
+import javax.persistence.ParameterMode;
 import javax.persistence.Table;
 
 @Entity
