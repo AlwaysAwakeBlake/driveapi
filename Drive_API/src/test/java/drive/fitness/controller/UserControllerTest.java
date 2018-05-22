@@ -56,5 +56,4 @@ public class UserControllerTest {
 //		 
 //		 Assert.assertEquals("", userController.getUserCompeting("TD"));
 //	}
-
 }
