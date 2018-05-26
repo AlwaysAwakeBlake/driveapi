@@ -22,9 +22,6 @@ public class Exercise {
 
 	@Column(name="`variation`")
 	private String variation;
-	
-	@Column(name="`user_Id`")
-	private int userId;
 
 	public int getId() {
 		return id;
@@ -56,13 +53,5 @@ public class Exercise {
 
 	public void setVariation(String variation) {
 		this.variation = variation;
-	}
-
-	public int getUserId() {
-		return userId;
-	}
-
-	public void setUser(int user) {
-		this.userId = user;
 	}
 }

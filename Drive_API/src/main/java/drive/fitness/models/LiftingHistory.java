@@ -52,6 +52,9 @@ public class LiftingHistory {
 	@Column(name="user_id")
 	private int userId;
 	
+	@Column(name="one_rep_max")
+	private int oneRepMax;
+	
 	@ManyToOne
 	private Exercise exercise;
 	
@@ -109,5 +112,13 @@ public class LiftingHistory {
 
 	public void setExercise(Exercise exercise) {
 		this.exercise = exercise;
+	}
+	
+	public int getOneRepMax() {
+		return oneRepMax;
+	}
+
+	public void setOneRepMax(int oneRepMax) {
+		this.oneRepMax = oneRepMax;
 	}
 }
