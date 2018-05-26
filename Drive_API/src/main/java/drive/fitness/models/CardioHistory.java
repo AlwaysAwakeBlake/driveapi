@@ -19,8 +19,11 @@ public class CardioHistory {
 	@Column(name="mph")
 	private double mph;
 	
-	@Column(name="distance")
-	private double distance;
+	@Column(name="miles")
+	private double miles;
+	
+	@Column(name="minutes")
+	private double minutes;
 	
 	@ManyToOne
 	private Exercise exercise;
@@ -60,12 +63,20 @@ public class CardioHistory {
 		this.mph = mph;
 	}
 	
-	public double getDistance() {
-		return distance;
+	public double getMiles() {
+		return miles;
 	}
 
-	public void setDistance(double distance) {
-		this.distance = distance;
+	public void setMiles(double miles) {
+		this.miles = miles;
+	}
+	
+	public double getMinutes() {
+		return minutes;
+	}
+
+	public void setMinutes(double minutes) {
+		this.minutes = minutes;
 	}
 	
 	public Exercise getExercise() {
