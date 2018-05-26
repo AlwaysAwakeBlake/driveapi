@@ -1,4 +1,5 @@
 package drive.fitness.models;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,30 @@ import javax.persistence.ParameterMode;
 
 @Entity
 @Table(name="users")
+@NamedStoredProcedureQueries({
+@NamedStoredProcedureQuery(name = "getUserCompeting", 
+                           procedureName = "get_user_competing",
+                           resultClasses=User.class,
+                           parameters = {
+                              @StoredProcedureParameter(mode = ParameterMode.IN, name = "user_name_param", type = String.class),
+                           }),
+@NamedStoredProcedureQuery(name = "get_user_id", 
+						   procedureName = "get_user_id",
+						   parameters = {
+								   @StoredProcedureParameter(mode = ParameterMode.IN, name = "username", type = String.class),
+								   @StoredProcedureParameter(mode = ParameterMode.OUT, name = "user_id", type = int.class)
+						   }),
+@NamedStoredProcedureQuery(name="getUser", 
+						   procedureName="get_user",
+						   resultClasses=User.class,
+						   parameters = {
+								   @StoredProcedureParameter(mode = ParameterMode.IN, name = "username", type = String.class),
+								   @StoredProcedureParameter(mode = ParameterMode.OUT, name = "user", type = User.class)
+						   }),
+@NamedStoredProcedureQuery(name="getUsers", 
+						   procedureName="get_users",
+						   resultClasses=User.class)
+})
 public class User {
 	
 	@Id
