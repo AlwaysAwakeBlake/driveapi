@@ -24,7 +24,7 @@ public class MuscleGroup {
 		this.id = id;
 	}
 
-	public String getMuscleGroupeName() {
+	public String getMuscleGroupName() {
 		return muscleGroupName;
 	}
 
