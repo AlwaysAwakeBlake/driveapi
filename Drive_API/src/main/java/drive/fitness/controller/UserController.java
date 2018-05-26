@@ -45,6 +45,11 @@ public class UserController {
         return (User) userDao.findByUsername(username);
     }
     
+    @RequestMapping(value = "/getUserByEmail", method= RequestMethod.GET)
+    public User getUserByEmail(@RequestParam(value = "email", defaultValue = "test") String email) {
+        return (User) userDao.findUserByEmail(email);
+    }
+    
     @SuppressWarnings("unchecked")
 	@RequestMapping(value = "/getUserCompeting", method= RequestMethod.GET)
     public List<User> getUserCompeting(@RequestParam(value = "username", defaultValue = "test") String username) {
