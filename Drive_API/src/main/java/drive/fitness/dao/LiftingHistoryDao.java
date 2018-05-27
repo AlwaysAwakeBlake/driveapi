@@ -22,4 +22,10 @@ public interface LiftingHistoryDao extends CrudRepository<LiftingHistory, Intege
 	
 	@Procedure(name = "get_user_gains_today")
 	public long getUserGainsToday(@Param("user_id") int userId);
+	
+	@Query("FROM LiftingHistory where userId=:userId")
+	public List<LiftingHistory> getUserLiftingHistory(@Param("userId") int userId);
+	
+	@Query("FROM LiftingHistory where userId=:userId AND exercise.id=:id")
+	public List<LiftingHistory> getLiftingHistoryByExercise(@Param("userId") int userId, @Param("exerciseName") int id);
 }

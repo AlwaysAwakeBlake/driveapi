@@ -17,6 +17,9 @@ public interface UserDao extends CrudRepository<User, Long>{
     @Procedure(name = "get_users_competing")
     public List<User> getUserCompeting(@Param("user_id") int user_id);
     
+    @Procedure(name = "get_users_competitors")
+    public List<User> getUserCompetitors(@Param("user_id") int user_id);
+    
     @Procedure(name = "get_user")
     public User getUser(@Param("username") String username);
     

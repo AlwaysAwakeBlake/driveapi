@@ -60,7 +60,7 @@ public class LiftingHistory {
 	@Column(name="user_id")
 	private int userId;
 	
-	@Column(name="one_rep_max")
+	@Column(name="one_rep_max", nullable = true)
 	private int oneRepMax;
 	
 	@ManyToOne
