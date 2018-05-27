@@ -1,4 +1,6 @@
 package drive.fitness.models;
+
+import java.math.BigInteger;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -8,16 +10,17 @@ import javax.persistence.NamedStoredProcedureQueries;
 import javax.persistence.NamedStoredProcedureQuery;
 import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.ParameterMode;
 
 @Entity
 @Table(name="users")
 @NamedStoredProcedureQueries({
 @NamedStoredProcedureQuery(name = "getUserCompeting", 
-                           procedureName = "get_user_competing",
+                           procedureName = "get_users_competing",
                            resultClasses=User.class,
                            parameters = {
-                              @StoredProcedureParameter(mode = ParameterMode.IN, name = "user_name_param", type = String.class),
+                              @StoredProcedureParameter(mode = ParameterMode.IN, name = "user_id", type = int.class),
                            }),
 @NamedStoredProcedureQuery(name = "get_user_id", 
 						   procedureName = "get_user_id",
@@ -65,6 +68,15 @@ public class User {
 	
 	@Column(name="`gym`")
 	private String gym;
+	
+	@Transient
+	private BigInteger gainsToday;
+	@Transient
+	private BigInteger gainsWeek;
+	@Transient
+	private BigInteger gainsMonth;
+	@Transient
+	private BigInteger gainsTotal;
 
 	public int getId() {
 		return id;
@@ -136,6 +148,38 @@ public class User {
 
 	public void setGym(String gym) {
 		this.gym = gym;
+	}
+	
+	public BigInteger getGainsToday() {
+		return gainsToday;
+	}
+
+	public void setGainsToday(BigInteger gainsToday) {
+		this.gainsToday = gainsToday;
+	}
+	
+	public BigInteger getGainsWeek() {
+		return gainsWeek;
+	}
+
+	public void setGainsWeek(BigInteger gainsWeek) {
+		this.gainsWeek = gainsWeek;
+	}
+	
+	public BigInteger getGainsMonth() {
+		return gainsMonth;
+	}
+
+	public void setGainsMonth(BigInteger gainsMonth) {
+		this.gainsMonth = gainsMonth;
+	}
+	
+	public BigInteger getGainsTotal() {
+		return gainsTotal;
+	}
+
+	public void setGainsTotal(BigInteger gainsTotal) {
+		this.gainsTotal = gainsTotal;
 	}
 
 }

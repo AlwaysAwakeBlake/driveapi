@@ -18,17 +18,25 @@ import javax.persistence.Table;
 @Entity
 @Table(name="lifting_history")
 @NamedStoredProcedureQueries({
-	   @NamedStoredProcedureQuery(name = "get_user_gains_week", 
+	   @NamedStoredProcedureQuery(name = "getUserGainsWeek", 
 	                              procedureName = "get_user_gains_week",
 	                              parameters = {
-	                                 @StoredProcedureParameter(mode = ParameterMode.IN, name = "user_id", type = int.class),
-	                                 @StoredProcedureParameter(mode = ParameterMode.OUT, name = "week_gains", type = long.class)
+	                                 @StoredProcedureParameter(mode = ParameterMode.IN, name = "user_id", type = int.class)
 	                              }),
-	   @NamedStoredProcedureQuery(name = "get_user_gains_month", 
+	   @NamedStoredProcedureQuery(name = "getUserGainsMonth", 
 							      procedureName = "get_user_gains_month",
 							      parameters = {
-							          @StoredProcedureParameter(mode = ParameterMode.IN, name = "user_id", type = int.class),
-							          @StoredProcedureParameter(mode = ParameterMode.OUT, name = "month_gains", type = long.class)
+							          @StoredProcedureParameter(mode = ParameterMode.IN, name = "user_id", type = int.class)
+							      }),
+	   @NamedStoredProcedureQuery(name = "getUserGainsToday", 
+	      						  procedureName = "get_user_gains_today",
+							      parameters = {
+							          @StoredProcedureParameter(mode = ParameterMode.IN, name = "user_id", type = int.class)
+							      }),
+	   @NamedStoredProcedureQuery(name = "getUserGainsTotal", 
+								  procedureName = "get_user_gains_total",
+							      parameters = {
+							          @StoredProcedureParameter(mode = ParameterMode.IN, name = "user_id", type = int.class)
 							      })
 })
 public class LiftingHistory {
