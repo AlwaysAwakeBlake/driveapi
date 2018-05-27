@@ -26,6 +26,6 @@ public interface LiftingHistoryDao extends CrudRepository<LiftingHistory, Intege
 	@Query("FROM LiftingHistory where userId=:userId")
 	public List<LiftingHistory> getUserLiftingHistory(@Param("userId") int userId);
 	
-	@Query("FROM LiftingHistory where userId=:userId AND exercise.exerciseName=:exerciseName")
-	public List<LiftingHistory> getLiftingHistoryByExercise(@Param("userId") int userId, @Param("exerciseName") String exerciseName);
+	@Query("FROM LiftingHistory where userId=:userId AND exercise.id=:id")
+	public List<LiftingHistory> getLiftingHistoryByExercise(@Param("userId") int userId, @Param("exerciseName") int id);
 }

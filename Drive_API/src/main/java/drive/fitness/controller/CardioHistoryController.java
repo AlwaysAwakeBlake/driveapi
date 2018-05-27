@@ -20,8 +20,8 @@ public class CardioHistoryController {
 	private CardioHistoryDao cardioHistoryDao;
 
     @RequestMapping(value = "/getCardioHistoryByExercise", method= RequestMethod.GET)
-    public List<CardioHistory> getCardioHistoryByExercise(@RequestParam(value = "userId", defaultValue = "test") int userId, @RequestParam(value = "exerciseName", defaultValue = "test") String exerciseName) {
-        return cardioHistoryDao.getCardioHistoryByExercise(userId, exerciseName);
+    public List<CardioHistory> getCardioHistoryByExercise(@RequestParam(value = "userId", defaultValue = "test") int userId, @RequestParam(value = "exerciseId", defaultValue = "test") int exerciseId) {
+        return cardioHistoryDao.getCardioHistoryByExercise(userId, exerciseId);
     }
     
     @RequestMapping(value = "/addCardioHistory", method= RequestMethod.POST)

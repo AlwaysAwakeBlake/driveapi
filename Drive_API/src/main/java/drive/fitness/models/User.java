@@ -22,6 +22,12 @@ import javax.persistence.ParameterMode;
                            parameters = {
                               @StoredProcedureParameter(mode = ParameterMode.IN, name = "user_id", type = int.class),
                            }),
+@NamedStoredProcedureQuery(name = "getUserCompetitors", 
+						   procedureName = "get_users_competitors",
+						   resultClasses=User.class,
+						   parameters = {
+							  @StoredProcedureParameter(mode = ParameterMode.IN, name = "user_id", type = int.class),
+						   }),
 @NamedStoredProcedureQuery(name = "get_user_id", 
 						   procedureName = "get_user_id",
 						   parameters = {

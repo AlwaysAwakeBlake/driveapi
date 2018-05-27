@@ -49,8 +49,8 @@ public class LiftingHistoryController {
     }
     
     @RequestMapping(value = "/getLiftingHistoryByExercise", method= RequestMethod.GET)
-    public List<LiftingHistory> getLiftingHistoryByExercise(@RequestParam(value = "userId", defaultValue = "test") int userId, @RequestParam(value = "exerciseName", defaultValue = "test") String exerciseName) {
-        return liftingHistoryDao.getLiftingHistoryByExercise(userId, exerciseName);
+    public List<LiftingHistory> getLiftingHistoryByExercise(@RequestParam(value = "userId", defaultValue = "test") int userId, @RequestParam(value = "exerciseId", defaultValue = "test") int exerciseId) {
+        return liftingHistoryDao.getLiftingHistoryByExercise(userId, exerciseId);
     }
     
     @RequestMapping(value = "/getUserGainsTotal", method= RequestMethod.GET)
