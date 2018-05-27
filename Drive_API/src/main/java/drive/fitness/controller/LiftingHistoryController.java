@@ -16,6 +16,8 @@ import javax.persistence.StoredProcedureQuery;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,6 +41,16 @@ public class LiftingHistoryController {
     @RequestMapping(value = "/getAllLiftingHistory", method= RequestMethod.GET)
     public List<LiftingHistory> getAllCompeting() {
         return (List<LiftingHistory>) liftingHistoryDao.findAll();
+    }
+    
+    @RequestMapping(value = "/getUserLiftingHistory", method= RequestMethod.GET)
+    public List<LiftingHistory> getUserLiftingHistory(@RequestParam(value = "userId", defaultValue = "test") int userId) {
+        return liftingHistoryDao.getUserLiftingHistory(userId);
+    }
+    
+    @RequestMapping(value = "/getLiftingHistoryByExercise", method= RequestMethod.GET)
+    public List<LiftingHistory> getLiftingHistoryByExercise(@RequestParam(value = "userId", defaultValue = "test") int userId, @RequestParam(value = "exerciseName", defaultValue = "test") String exerciseName) {
+        return liftingHistoryDao.getLiftingHistoryByExercise(userId, exerciseName);
     }
     
     @RequestMapping(value = "/getUserGainsTotal", method= RequestMethod.GET)
