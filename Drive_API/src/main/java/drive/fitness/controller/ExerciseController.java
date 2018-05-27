@@ -40,7 +40,7 @@ public class ExerciseController {
     public List<Exercise> getUserByUsername(@RequestParam(value = "userID", defaultValue = "0") int userId) {
         return (List<Exercise>) exerciseDao.getExerciseByUser(userId);
     }
-    
+
     @Transactional
     @RequestMapping(value = "/createExercise", method= RequestMethod.POST)
     public void createExercise (@RequestBody Exercise ex, @RequestParam(value = "userID", defaultValue = "1") int userId) {
@@ -113,8 +113,4 @@ public class ExerciseController {
     	query.setParameter("variation_param", variation);
     	return (Exercise) query.getSingleResult();
     }
-    
-    
-    
-     
 }

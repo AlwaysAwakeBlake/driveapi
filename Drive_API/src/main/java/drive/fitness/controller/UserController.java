@@ -52,10 +52,19 @@ public class UserController {
     
     @SuppressWarnings("unchecked")
 	@RequestMapping(value = "/getUserCompeting", method= RequestMethod.GET)
-    public List<User> getUserCompeting(@RequestParam(value = "username", defaultValue = "test") String username) {
+    public List<User> getUserCompeting(@RequestParam(value = "userId", defaultValue = "test") int userId) {
     	StoredProcedureQuery query =
                 em.createNamedStoredProcedureQuery("getUserCompeting");
-    	query.setParameter("user_name_param", username);
+    	query.setParameter("user_id", userId);
+    	return query.getResultList();
+    }
+    
+    @SuppressWarnings("unchecked")
+	@RequestMapping(value = "/getUserCompeting", method= RequestMethod.GET)
+    public List<User> getUserCompetitors(@RequestParam(value = "userId", defaultValue = "test") int userId) {
+    	StoredProcedureQuery query =
+                em.createNamedStoredProcedureQuery("getUserCompetitors");
+    	query.setParameter("user_id", userId);
     	return query.getResultList();
     }
     
@@ -68,4 +77,5 @@ public class UserController {
     public int getUserId(@RequestParam(value = "username", defaultValue = "test") String username) {
     	return userDao.getUserId(username);
     }
+
 }
