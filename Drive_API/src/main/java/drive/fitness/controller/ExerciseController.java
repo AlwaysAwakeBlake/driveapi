@@ -40,6 +40,11 @@ public class ExerciseController {
     public List<Exercise> getUserByUsername(@RequestParam(value = "userID", defaultValue = "0") int userId) {
         return (List<Exercise>) exerciseDao.getExerciseByUser(userId);
     }
+    
+    @RequestMapping(value = "/getAllExercises", method= RequestMethod.GET)
+    public List<Exercise> getAllExercises() {
+        return (List<Exercise>) exerciseDao.findAll();
+    }
 
     @Transactional
     @RequestMapping(value = "/createExercise", method= RequestMethod.POST)

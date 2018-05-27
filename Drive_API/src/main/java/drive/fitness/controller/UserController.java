@@ -60,7 +60,7 @@ public class UserController {
     }
     
     @SuppressWarnings("unchecked")
-	@RequestMapping(value = "/getUserCompeting", method= RequestMethod.GET)
+	@RequestMapping(value = "/getUserCompetitors", method= RequestMethod.GET)
     public List<User> getUserCompetitors(@RequestParam(value = "userId", defaultValue = "test") int userId) {
     	StoredProcedureQuery query =
                 em.createNamedStoredProcedureQuery("getUserCompetitors");
