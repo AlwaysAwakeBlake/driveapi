@@ -23,5 +23,4 @@ public class ExerciseController {
     public List<Exercise> getUserByUsername(@RequestParam(value = "userID", defaultValue = "0") int userId) {
         return (List<Exercise>) exerciseDao.getExerciseByUser(userId);
     }
-     
 }

@@ -68,4 +68,5 @@ public class UserController {
     public int getUserId(@RequestParam(value = "username", defaultValue = "test") String username) {
     	return userDao.getUserId(username);
     }
+
 }

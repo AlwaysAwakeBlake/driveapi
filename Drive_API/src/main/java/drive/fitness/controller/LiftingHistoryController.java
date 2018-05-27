@@ -106,4 +106,9 @@ public class LiftingHistoryController {
     public void addLiftingHistory(LiftingHistory lf) {    	
     	liftingHistoryDao.save(lf);
     }
+    
+    @RequestMapping(value = "/deleteLiftingHistory", method= RequestMethod.POST)
+    public void deleteLiftingHistory(LiftingHistory lf) {    	
+    	liftingHistoryDao.delete(lf);
+    }
 }
