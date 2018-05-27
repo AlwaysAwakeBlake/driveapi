@@ -59,15 +59,15 @@ public class UserController {
     	return query.getResultList();
     }
     
-    @SuppressWarnings("unchecked")
-	@RequestMapping(value = "/getUserCompeting", method= RequestMethod.GET)
-    public List<User> getUserCompetitors(@RequestParam(value = "userId", defaultValue = "test") int userId) {
-    	StoredProcedureQuery query =
-                em.createNamedStoredProcedureQuery("getUserCompetitors");
-    	query.setParameter("user_id", userId);
-    	return query.getResultList();
-    }
-    
+//    @SuppressWarnings("unchecked")
+//	@RequestMapping(value = "/getUserCompeting", method= RequestMethod.GET)
+//    public List<User> getUserCompetitors(@RequestParam(value = "userId", defaultValue = "test") int userId) {
+//    	StoredProcedureQuery query =
+//                em.createNamedStoredProcedureQuery("getUserCompetitors");
+//    	query.setParameter("user_id", userId);
+//    	return query.getResultList();
+//    }
+//    
     @RequestMapping(value = "/getUser", method= RequestMethod.GET)
     public User getUser(@RequestParam(value = "username", defaultValue = "test") String username) {
     	return userDao.getUser(username);
