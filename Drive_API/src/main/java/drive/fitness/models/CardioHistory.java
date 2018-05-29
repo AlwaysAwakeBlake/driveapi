@@ -1,5 +1,7 @@
 package drive.fitness.models;
 
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,7 +20,7 @@ public class CardioHistory {
 	private int id;
 	
 	@Column(name="date")
-	private String date;
+	private Date date;
 	
 	@Column(name="gains")
 	private int gains;
@@ -46,11 +48,11 @@ public class CardioHistory {
 		this.id = id;
 	}
 	
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 	

@@ -11,6 +11,6 @@ import drive.fitness.models.Competing;
 import drive.fitness.models.User;
 
 public interface CompetingDao extends CrudRepository<Competing, Integer>{
-	@Query("FROM Competing where userId=:userId AND competingUserId=:competingUserId")
+	@Query("FROM Competing where id=:userId AND competingUser=:competingUserId")
 	public Competing getCompeting(@Param("userId") int userId, @Param("competingUserId") int competingUserId);
 }

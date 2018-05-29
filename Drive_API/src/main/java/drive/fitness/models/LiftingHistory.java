@@ -1,11 +1,14 @@
 package drive.fitness.models;
 
 import java.math.BigInteger;
+import java.util.Date;
 
 import javax.persistence.Column;
 
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedStoredProcedureQueries;
@@ -17,36 +20,15 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="lifting_history")
-@NamedStoredProcedureQueries({
-	   @NamedStoredProcedureQuery(name = "getUserGainsWeek", 
-	                              procedureName = "get_user_gains_week",
-	                              parameters = {
-	                                 @StoredProcedureParameter(mode = ParameterMode.IN, name = "user_id", type = int.class)
-	                              }),
-	   @NamedStoredProcedureQuery(name = "getUserGainsMonth", 
-							      procedureName = "get_user_gains_month",
-							      parameters = {
-							          @StoredProcedureParameter(mode = ParameterMode.IN, name = "user_id", type = int.class)
-							      }),
-	   @NamedStoredProcedureQuery(name = "getUserGainsToday", 
-	      						  procedureName = "get_user_gains_today",
-							      parameters = {
-							          @StoredProcedureParameter(mode = ParameterMode.IN, name = "user_id", type = int.class)
-							      }),
-	   @NamedStoredProcedureQuery(name = "getUserGainsTotal", 
-								  procedureName = "get_user_gains_total",
-							      parameters = {
-							          @StoredProcedureParameter(mode = ParameterMode.IN, name = "user_id", type = int.class)
-							      })
-})
 public class LiftingHistory {
 	
 	@Id
-	@Column(name="id")
+	@Column(name="id", columnDefinition = "serial")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	@Column(name="date")
-	private String date;
+	private Date date;
 	
 	@Column(name="gains")
 	private int gains;
@@ -74,11 +56,11 @@ public class LiftingHistory {
 		this.id = id;
 	}
 	
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 	

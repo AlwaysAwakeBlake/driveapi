@@ -30,7 +30,7 @@ public class CompetingController {
     	return local_competing;
     }
     
-    @RequestMapping(value = "/createCompeting", method= RequestMethod.GET)
+    @RequestMapping(value = "/createCompeting", method= RequestMethod.POST)
     public String createCompeting(Competing competing) {
     	if (getCompeting(competing).getId() != -1) {
     		return "already_exists";
@@ -40,7 +40,7 @@ public class CompetingController {
     	}
     }
     
-    @RequestMapping(value = "/deleteCompeting", method= RequestMethod.GET)
+    @RequestMapping(value = "/deleteCompeting", method= RequestMethod.POST)
     public String deleteCompeting(Competing competing) {
     	if (getCompeting(competing).getId() == -1) {
     		return "doesnt_exists";
