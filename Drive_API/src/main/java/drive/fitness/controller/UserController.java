@@ -14,6 +14,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,14 +42,14 @@ public class UserController {
     	return findByYearProcedure.getResultList();
     }
     
-    @RequestMapping(value = "/getUserByUsername", method= RequestMethod.GET)
-    public User getUserByUsername(@RequestParam(value = "username", defaultValue = "test") String username) {
-        return (User) userDao.findByUsername(username);
-    }
-    
     @RequestMapping(value = "/getUserByEmail", method= RequestMethod.GET)
     public User getUserByEmail(@RequestParam(value = "email", defaultValue = "test") String email) {
-        return (User) userDao.findUserByEmail(email);
+    	User user = userDao.findUserByEmail(email);
+    	if (user == null) {
+    		user = new User();
+    		user.setEmail("doesnt_exist");
+    	}
+        return user;
     }
     
     @SuppressWarnings("unchecked")
@@ -76,6 +78,22 @@ public class UserController {
     @RequestMapping(value = "/getUserId", method= RequestMethod.GET)
     public int getUserId(@RequestParam(value = "username", defaultValue = "test") String username) {
     	return userDao.getUserId(username);
+    }
+    
+    @RequestMapping(value = "/getUserByUsername", method= RequestMethod.GET)
+    public User getUserByUsername(@RequestParam(value = "username", defaultValue = "test") String username) {
+    	User user = userDao.findByUsername(username);
+    	if (user == null) {
+    		user = new User();
+    		user.setUsername("alreadyexists");
+    	}
+        return user;
+    }
+    
+    @PostMapping(value = "/createUser")
+    public void createUser(@RequestBody User user) {
+    	System.out.println(user.getId());
+        userDao.save(user);
     }
 
 }

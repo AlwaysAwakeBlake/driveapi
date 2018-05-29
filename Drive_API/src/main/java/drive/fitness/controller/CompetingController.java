@@ -21,7 +21,32 @@ public class CompetingController {
     }
     
     @RequestMapping(value = "/getCompeting", method= RequestMethod.GET)
-    public List<Competing> getCompeting() {
-        return (List<Competing>) competingDao.findAll();
+    public Competing getCompeting(Competing competing) {
+    	Competing local_competing = competingDao.getCompeting(competing.getId(), competing.getCompetingUser());
+        if (local_competing == null) {
+        	local_competing.setId(-1);
+        	local_competing.setCompetingUser(-1);
+        }
+    	return local_competing;
+    }
+    
+    @RequestMapping(value = "/createCompeting", method= RequestMethod.GET)
+    public String createCompeting(Competing competing) {
+    	if (getCompeting(competing).getId() != -1) {
+    		return "already_exists";
+    	} else {
+    		competingDao.save(competing);
+    		return "create_successfull";
+    	}
+    }
+    
+    @RequestMapping(value = "/deleteCompeting", method= RequestMethod.GET)
+    public String deleteCompeting(Competing competing) {
+    	if (getCompeting(competing).getId() == -1) {
+    		return "doesnt_exists";
+    	} else {
+    		competingDao.delete(competing);
+    		return "delete_successfull";
+    	}
     }
 }
