@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 @Table(name="cardio_history")
 public class CardioHistory {
@@ -38,6 +40,7 @@ public class CardioHistory {
 	private Exercise exercise;
 	
 	@Column(name="user_id")
+	@JsonProperty("user_id")
 	private int userId;
 	
 	public int getId() {
