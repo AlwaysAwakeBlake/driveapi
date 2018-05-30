@@ -4,6 +4,7 @@ import javax.persistence.Column;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.NamedStoredProcedureQueries;
 import javax.persistence.NamedStoredProcedureQuery;
 import javax.persistence.StoredProcedureParameter;
@@ -11,6 +12,7 @@ import javax.persistence.ParameterMode;
 import javax.persistence.Table;
 
 @Entity
+@IdClass(CompetingId.class)
 @Table(name="competing")
 public class Competing {
 	
@@ -18,6 +20,7 @@ public class Competing {
 	@Column(name="users_id")
 	private int id;
 	
+	@Id
 	@Column(name="`competing_users_id`")
 	private int competingUser;
 	
