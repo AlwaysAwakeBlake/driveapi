@@ -18,6 +18,8 @@ import javax.persistence.ParameterMode;
 
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 @Table(name="lifting_history")
 public class LiftingHistory {
@@ -28,6 +30,7 @@ public class LiftingHistory {
 	private int id;
 	
 	@Column(name="date")
+	@JsonProperty("date")
 	private Date date;
 	
 	@Column(name="gains")
@@ -40,6 +43,7 @@ public class LiftingHistory {
 	private int reps;
 	
 	@Column(name="user_id")
+	@JsonProperty("user_id")
 	private int userId;
 	
 	@Column(name="one_rep_max", nullable = true)
