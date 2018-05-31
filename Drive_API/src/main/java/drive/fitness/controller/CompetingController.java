@@ -44,7 +44,7 @@ public class CompetingController {
     
     @RequestMapping(value = "/deleteCompeting", method= RequestMethod.POST)
     public String deleteCompeting(@RequestBody Competing competing) {
-    	if (getCompeting(competing).getId() != -1) {
+    	if (getCompeting(competing).getId() == -1) {
     		return "doesnt_exists";
     	} else {
     		competingDao.delete(competing);
