@@ -13,4 +13,7 @@ import drive.fitness.models.LiftingHistory;
 public interface CardioHistoryDao extends CrudRepository<CardioHistory, Integer>{	
 	@Query("FROM CardioHistory where userId=:userId AND exercise.id=:exerciseId")
 	public List<CardioHistory> getCardioHistoryByExercise(@Param("userId") int userId, @Param("exerciseId") int exerciseId);
+	
+	@Query("FROM CardioHistory where userId=:userId")
+	public List<CardioHistory> getAllCardioHistoryById(@Param("userId") int userId);
 }
