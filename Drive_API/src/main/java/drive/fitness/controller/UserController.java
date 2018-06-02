@@ -135,9 +135,13 @@ public class UserController {
     	competingUsers = this.getUserCompeting(userId);
     	competingUsers.forEach((user) -> {
     		BigInteger gainsToday = this.getUserGainsToday(user.getId());
+    		gainsToday = gainsToday != null ? gainsToday : BigInteger.ZERO;
     		BigInteger gainsWeek = this.getUserGainsWeek(user.getId());
+    		gainsWeek = gainsWeek != null ? gainsWeek : BigInteger.ZERO;
     		BigInteger gainsMonth = this.getUserGainsMonth(user.getId());
+    		gainsMonth = gainsMonth != null ? gainsMonth : BigInteger.ZERO;
     		BigInteger gainsTotal = this.getUserGainsTotal(user.getId());
+    		gainsTotal = gainsTotal != null ? gainsTotal : BigInteger.ZERO;
     		user.setGainsToday(gainsToday);
     		user.setGainsWeek(gainsWeek);
     		user.setGainsMonth(gainsMonth);
@@ -145,5 +149,6 @@ public class UserController {
     	});
     	return competingUsers;
     }
-
+    
+    
 }

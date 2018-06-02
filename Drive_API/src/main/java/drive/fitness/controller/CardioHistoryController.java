@@ -34,4 +34,9 @@ public class CardioHistoryController {
     public void deleteCardioHistory(@RequestBody CardioHistory ch) {    	
     	cardioHistoryDao.delete(ch);
     }
+    
+    @RequestMapping(value = "/getCardioHistoryById", method= RequestMethod.GET)
+    public List<CardioHistory> getCardioHistoryById(@RequestParam(value = "userId", defaultValue = "test") int userId) {    	
+    	return cardioHistoryDao.getAllCardioHistoryById(userId);
+    }
 }
