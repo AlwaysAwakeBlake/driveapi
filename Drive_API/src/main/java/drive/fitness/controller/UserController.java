@@ -89,8 +89,7 @@ public class UserController {
     public int getUserId(@RequestParam(value = "username", defaultValue = "test") String username) {
     	return userDao.getUserId(username);
     }
-    
-<<<<<<< HEAD
+
     @RequestMapping(value = "/getUserByUsername", method= RequestMethod.GET)
     public User getUserByUsername(@RequestParam(value = "username", defaultValue = "test") String username) {
     	User user = userDao.findByUsername(username);
@@ -113,7 +112,13 @@ public class UserController {
     	StoredProcedureQuery query =
                 em.createNamedStoredProcedureQuery("getUserGainsTotal");
     	query.setParameter("user_id", userId);
-    	return (BigInteger)query.getSingleResult();
+    	BigInteger result = (BigInteger)query.getSingleResult();
+    	if(result == null) {
+    		result = BigInteger.ZERO;
+    	}
+    	
+    	System.out.println(result);
+    	return result;
     }
     
     @RequestMapping(value = "/getUserGainsWeek", method= RequestMethod.GET)
@@ -161,8 +166,6 @@ public class UserController {
     	return competingUsers;
     }
     
-    
-=======
     @RequestMapping(value = "/getUserProfilePic", method= RequestMethod.GET)
     public @ResponseBody ResponseEntity<String> getUserProfilePic(@RequestParam(value = "username", defaultValue = "test") String username) throws IOException {
     	return s3Wrapper.download("profile_pics/" + username);
@@ -173,6 +176,4 @@ public class UserController {
     	System.out.println("here");
     	s3Wrapper.uploadImage(pic, "profile_pics/" + username);
     }
-
->>>>>>> md/s3_profile_pic_call
 }
