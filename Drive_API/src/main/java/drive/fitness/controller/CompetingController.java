@@ -34,6 +34,7 @@ public class CompetingController {
     
     @RequestMapping(value = "/createCompeting", method= RequestMethod.POST)
     public String createCompeting(@RequestBody Competing competing) {
+    	System.out.println(getCompeting(competing).getId());
     	if (getCompeting(competing).getId() == -1) {
     		competingDao.save(competing);
     		return "create_successfull";
