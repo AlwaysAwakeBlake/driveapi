@@ -92,9 +92,10 @@ public class UserController {
     }
     
     @PostMapping(value = "/createUser")
-    public void createUser(@RequestBody User user) {
+    public User createUser(@RequestBody User user) {
     	System.out.println(user.getId());
         userDao.save(user);
+        return user;
     }
     
     @RequestMapping(value = "/getUserGainsTotal", method= RequestMethod.GET)
