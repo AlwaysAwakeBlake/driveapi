@@ -1,28 +1,37 @@
 package drive.fitness.controller;
 
 import org.springframework.web.bind.annotation.RestController;
+
+import com.amazonaws.services.s3.model.PutObjectResult;
+import com.amazonaws.services.s3.model.S3ObjectSummary;
 import drive.fitness.dao.*;
 import drive.fitness.models.*;
-
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import drive.fitness.s3.S3Wrapper;
 
 @RestController
 public class UserController {
+	
+	@Autowired
+	private S3Wrapper s3Wrapper;
 
 	@Autowired
 	private UserDao userDao;
@@ -81,6 +90,7 @@ public class UserController {
     	return userDao.getUserId(username);
     }
     
+<<<<<<< HEAD
     @RequestMapping(value = "/getUserByUsername", method= RequestMethod.GET)
     public User getUserByUsername(@RequestParam(value = "username", defaultValue = "test") String username) {
     	User user = userDao.findByUsername(username);
@@ -152,4 +162,17 @@ public class UserController {
     }
     
     
+=======
+    @RequestMapping(value = "/getUserProfilePic", method= RequestMethod.GET)
+    public @ResponseBody ResponseEntity<String> getUserProfilePic(@RequestParam(value = "username", defaultValue = "test") String username) throws IOException {
+    	return s3Wrapper.download("profile_pics/" + username);
+    }
+    
+    @RequestMapping(value = "/uploadUserProfilePic", method= RequestMethod.POST)
+    public void uploadUserProfilePic(@RequestParam(value = "username", defaultValue = "test") String username, @RequestBody String pic) throws IOException {
+    	System.out.println("here");
+    	s3Wrapper.uploadImage(pic, "profile_pics/" + username);
+    }
+
+>>>>>>> md/s3_profile_pic_call
 }
