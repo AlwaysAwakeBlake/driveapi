@@ -116,8 +116,6 @@ public class UserController {
     	if(result == null) {
     		result = BigInteger.ZERO;
     	}
-    	
-    	System.out.println(result);
     	return result;
     }
     
