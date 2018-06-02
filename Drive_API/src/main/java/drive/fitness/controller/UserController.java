@@ -90,7 +90,6 @@ public class UserController {
     	return userDao.getUserId(username);
     }
     
-    @GetMapping(value = "/get-image-with-media-type", produces = MediaType.IMAGE_PNG_VALUE)
     @RequestMapping(value = "/getUserProfilePic", method= RequestMethod.GET)
     public @ResponseBody ResponseEntity<String> getUserProfilePic(@RequestParam(value = "username", defaultValue = "test") String username) throws IOException {
     	return s3Wrapper.download("profile_pics/" + username);
@@ -98,8 +97,8 @@ public class UserController {
     
     @RequestMapping(value = "/uploadUserProfilePic", method= RequestMethod.POST)
     public void uploadUserProfilePic(@RequestParam(value = "username", defaultValue = "test") String username, @RequestBody String pic) throws IOException {
-    	System.out.println("HERE");
-    	System.out.println(pic.length());
+    	System.out.println("here");
+    	s3Wrapper.uploadImage(pic, "profile_pics/" + username);
     }
 
 }

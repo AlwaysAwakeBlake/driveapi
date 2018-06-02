@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -32,10 +33,20 @@ public class S3Wrapper {
 
 	@Value("${jsa.s3.bucket}")
 	private String bucket;
-
-	private PutObjectResult upload(String base64Image, String uploadKey) throws FileNotFoundException {
-		return upload(new FileInputStream(base64Image), uploadKey);
+	
+	public String uploadImage(String base64Image, String uploadKey) throws FileNotFoundException {
+		byte[] bI = org.apache.commons.codec.binary.Base64.decodeBase64((base64Image.substring(base64Image.indexOf(",")+1)).getBytes());
+		InputStream fis = new ByteArrayInputStream(bI);
+		PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, uploadKey, fis, new ObjectMetadata());
+		ObjectMetadata metadata = new ObjectMetadata();
+		metadata.setContentLength(bI.length);
+		metadata.setContentType("image/jpeg");
+		metadata.setCacheControl("public, max-age=31536000");
+		amazonS3Client.putObject(bucket, uploadKey, fis, metadata);
+		amazonS3Client.setObjectAcl(bucket, uploadKey, CannedAccessControlList.PublicRead);
+		return "SUCCESS";
 	}
+
 
 	private PutObjectResult upload(InputStream inputStream, String uploadKey) {
 		PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, uploadKey, inputStream, new ObjectMetadata());
@@ -70,7 +81,7 @@ public class S3Wrapper {
 
 		S3Object s3Object = amazonS3Client.getObject(getObjectRequest);
 		S3ObjectInputStream objectInputStream = s3Object.getObjectContent();
-		byte[] bytes = objectInputStream.readAllBytes();
+		byte[] bytes = IOUtils.toByteArray(objectInputStream);
 		objectInputStream.close();
 		String base64Image = Base64.encodeAsString(bytes);
 
@@ -78,7 +89,7 @@ public class S3Wrapper {
 
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-		httpHeaders.setContentLength(bytes.length);
+		httpHeaders.setContentLength(base64Image.length());
 		httpHeaders.setContentDispositionFormData("attachment", fileName);
 
 		return new ResponseEntity<>(base64Image, httpHeaders, HttpStatus.OK);
