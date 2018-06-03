@@ -15,15 +15,28 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.stream.ImageOutputStream;
 
 @Service
 public class S3Wrapper {
@@ -34,17 +47,50 @@ public class S3Wrapper {
 	@Value("${jsa.s3.bucket}")
 	private String bucket;
 	
-	public String uploadImage(String base64Image, String uploadKey) throws FileNotFoundException {
-		byte[] bI = org.apache.commons.codec.binary.Base64.decodeBase64((base64Image.substring(base64Image.indexOf(",")+1)).getBytes());
-		InputStream fis = new ByteArrayInputStream(bI);
+	public String uploadImage(String base64Image, String uploadKey) throws IOException {
+		File compressed = compressImage(base64Image);
+
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+		InputStream fis = new FileInputStream(compressed);
+		
 		PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, uploadKey, fis, new ObjectMetadata());
 		ObjectMetadata metadata = new ObjectMetadata();
-		metadata.setContentLength(bI.length);
-		metadata.setContentType("image/jpeg");
+		metadata.setContentLength(compressed.length());
+		metadata.setContentType("image/jpg");
 		metadata.setCacheControl("public, max-age=31536000");
+
 		amazonS3Client.putObject(bucket, uploadKey, fis, metadata);
 		amazonS3Client.setObjectAcl(bucket, uploadKey, CannedAccessControlList.PublicRead);
 		return "SUCCESS";
+	}
+	
+	public File compressImage(String base64Image) throws IOException {
+		String imageString = base64Image.split(",")[1];
+		BufferedImage image = null;
+		File compressedImageFile = new File("compress.jpg");
+        OutputStream os =new FileOutputStream(compressedImageFile);
+		byte[] imageByte = Base64.decode(imageString);
+		ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+		image = ImageIO.read(bis);
+		bis.close();
+		image.getScaledInstance(96, 96, Image.SCALE_DEFAULT);
+		
+		Iterator<ImageWriter>writers =  ImageIO.getImageWritersByFormatName("jpg");
+        ImageWriter writer = (ImageWriter) writers.next();
+        
+        ImageOutputStream ios = ImageIO.createImageOutputStream(os);
+        writer.setOutput(ios);
+        
+        ImageWriteParam param = writer.getDefaultWriteParam();
+        if (param.canWriteCompressed()){
+	        param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+	        param.setCompressionQuality(0.2f);
+        }
+        writer.write(null, new IIOImage(image, null, null), param);
+        
+        ios.close();
+        writer.dispose();
+        return compressedImageFile;
 	}
 
 
