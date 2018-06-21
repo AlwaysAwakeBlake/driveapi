@@ -37,7 +37,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 							parameters = {
 									@StoredProcedureParameter(mode = ParameterMode.IN, name = "user_id_param", type = int.class),
 									@StoredProcedureParameter(mode = ParameterMode.IN, name = "ex_id_param", type = int.class),
-						})
+							}),
+@NamedStoredProcedureQuery(name = "getUniqueExercises", 
+							procedureName = "get_unique_exercises",
+							resultClasses=Exercise.class,
+							parameters = {
+							   @StoredProcedureParameter(mode = ParameterMode.IN, name = "user_id", type = int.class),
+							})
 })
 public class Exercise {
 	
