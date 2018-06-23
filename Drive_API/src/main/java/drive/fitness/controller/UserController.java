@@ -54,7 +54,9 @@ public class UserController {
     
     @RequestMapping(value = "/getUserByEmail", method= RequestMethod.GET)
     public User getUserByEmail(@RequestParam(value = "email", defaultValue = "test") String email) {
-    	User user = userDao.findUserByEmail(email);
+    	User user = userDao.findByEmailIgnoreCase(email);
+    	
+//    	User user = userDao.findUserByEmail(email);
     	if (user == null) {
     		user = new User();
     		user.setEmail("doesnt_exist");

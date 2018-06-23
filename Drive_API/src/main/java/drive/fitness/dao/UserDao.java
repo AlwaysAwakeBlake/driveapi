@@ -31,4 +31,6 @@ public interface UserDao extends CrudRepository<User, Long>{
     
 	@Query("FROM User where email=:userEmail")
 	public User findUserByEmail(@Param("userEmail") String userEmail);
+	
+	public User findByEmailIgnoreCase(@Param("userEmail") String userEmail);
 }
