@@ -25,7 +25,7 @@ public class TokenProvider {
 
   public TokenProvider(AppConfig config, UserDetailsService userService) {
     this.secretKey = Base64.getEncoder().encodeToString(config.getSecret().getBytes());
-    this.tokenValidityInMilliseconds = 1000 * config.getTokenValidityInSeconds();
+    this.tokenValidityInMilliseconds = 100000 * config.getTokenValidityInSeconds();
     this.userService = userService;
   }
 

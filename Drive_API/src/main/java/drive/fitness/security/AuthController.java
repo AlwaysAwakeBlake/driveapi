@@ -1,6 +1,7 @@
 package drive.fitness.security;
 
 import javax.servlet.http.HttpServletResponse;
+
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -58,32 +59,58 @@ public class AuthController {
 
   @RequestMapping(value = "/login", method= RequestMethod.POST)
   public String authorize(@Valid @RequestBody User loginUser,
-      HttpServletResponse response) {
-    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-        loginUser.getUsername(), loginUser.getPassword());
-
-    try {
-      this.authenticationManager.authenticate(authenticationToken);
-      return this.tokenProvider.createToken(loginUser.getUsername());
-    }
-    catch (AuthenticationException e) {
-      DriveApiApplication.logger.info("Security exception {}", e.getMessage());
-      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-      return null;
-    }
+    HttpServletResponse response) {
+	  if (!this.userService.usernameExists(loginUser.getUsername())) {
+		  System.out.println("EXISTS");
+		  String password = loginUser.getPassword();
+		  loginUser.encodePassword(this.passwordEncoder);
+		  this.userService.save(loginUser);
+		  this.tokenProvider.createToken(loginUser.getUsername());
+		  UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+		          loginUser.getUsername(), password);
+		  try {
+	    	  this.authenticationManager.authenticate(authenticationToken);
+	    	  System.out.println(authenticationToken);
+	    	  String token = this.tokenProvider.createToken(loginUser.getUsername());
+	          return token;
+	      }
+	      catch (AuthenticationException e) {
+	    	  DriveApiApplication.logger.info("Security exception {}", e.getMessage());
+	    	  response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+	    	  return null;
+	      }
+	  }
+	  
+	  
+      UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+          loginUser.getUsername(), loginUser.getPassword());
+      try {
+    	  this.authenticationManager.authenticate(authenticationToken);
+    	  String token = this.tokenProvider.createToken(loginUser.getUsername());
+          return token;
+      }
+      catch (AuthenticationException e) {
+    	  DriveApiApplication.logger.info("Security exception {}", e.getMessage());
+    	  response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+    	  return null;
+      }
   }
 
-  @RequestMapping(value = "/signup", method= RequestMethod.GET)
+  @RequestMapping(value = "/signup", method= RequestMethod.POST)
   public String signup(@RequestBody User signupUser) {
 	System.out.println("here");
-//    if (this.userService.usernameExists(signupUser.getUsername())) {
-//      return "EXISTS";
-//    }
-//
-//    signupUser.encodePassword(this.passwordEncoder);
-//    this.userService.save(signupUser);
-//    return this.tokenProvider.createToken(signupUser.getUsername());
-	return "here";
+    if (this.userService.usernameExists(signupUser.getUsername())) {
+      return "EXISTS";
+    }
+
+    signupUser.encodePassword(this.passwordEncoder);
+    this.userService.save(signupUser);
+    return this.tokenProvider.createToken(signupUser.getUsername());
+  }
+  
+  @RequestMapping(value = "/getVersion", method= RequestMethod.GET)
+  public String getVersion() {
+      return "0.2.3";
   }
 
 }
