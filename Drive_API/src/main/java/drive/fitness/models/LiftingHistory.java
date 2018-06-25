@@ -1,6 +1,7 @@
 package drive.fitness.models;
 
 import java.math.BigInteger;
+
 import java.util.Date;
 
 import javax.persistence.Column;

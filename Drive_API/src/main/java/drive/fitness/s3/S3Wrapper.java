@@ -123,22 +123,28 @@ public class S3Wrapper {
 	}
 
 	public ResponseEntity<String> download(String key) throws IOException {
-		GetObjectRequest getObjectRequest = new GetObjectRequest(bucket, key);
-
-		S3Object s3Object = amazonS3Client.getObject(getObjectRequest);
-		S3ObjectInputStream objectInputStream = s3Object.getObjectContent();
-		byte[] bytes = IOUtils.toByteArray(objectInputStream);
-		objectInputStream.close();
-		String base64Image = Base64.encodeAsString(bytes);
-
-		String fileName = URLEncoder.encode(key, "UTF-8").replaceAll("\\+", "%20");
-
-		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-		httpHeaders.setContentLength(base64Image.length());
-		httpHeaders.setContentDispositionFormData("attachment", fileName);
-
-		return new ResponseEntity<>(base64Image, httpHeaders, HttpStatus.OK);
+		try {
+			GetObjectRequest getObjectRequest = new GetObjectRequest(bucket, key);
+	
+			S3Object s3Object = amazonS3Client.getObject(getObjectRequest);
+			S3ObjectInputStream objectInputStream = s3Object.getObjectContent();
+			byte[] bytes = IOUtils.toByteArray(objectInputStream);
+			objectInputStream.close();
+			String base64Image = Base64.encodeAsString(bytes);
+	
+			String fileName = URLEncoder.encode(key, "UTF-8").replaceAll("\\+", "%20");
+	
+			HttpHeaders httpHeaders = new HttpHeaders();
+			httpHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+			httpHeaders.setContentLength(base64Image.length());
+			httpHeaders.setContentDispositionFormData("attachment", fileName);
+	
+			return new ResponseEntity<>(base64Image, httpHeaders, HttpStatus.OK);
+		} catch(Exception e) {
+			String noPhoto = "NahNigga";
+			HttpHeaders httpHeaders = new HttpHeaders();
+			return new ResponseEntity<>(noPhoto, httpHeaders, HttpStatus.OK);
+		}
 	}
 
 	public List<S3ObjectSummary> list() {

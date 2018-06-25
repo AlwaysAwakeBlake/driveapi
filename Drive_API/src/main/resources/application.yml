@@ -1,0 +1,11 @@
+
+app:
+  secret: awerq23raf3232sa
+  token-validity-in-seconds: 2592000
+
+spring:
+  mvc:
+    favicon:
+      enabled: false
+  resources:
+    add-mappings: false
