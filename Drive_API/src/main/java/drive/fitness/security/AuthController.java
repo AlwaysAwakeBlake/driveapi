@@ -2,6 +2,7 @@ package drive.fitness.security;
 
 import javax.servlet.http.HttpServletResponse;
 
+
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -87,6 +88,7 @@ public class AuthController {
       try {
     	  this.authenticationManager.authenticate(authenticationToken);
     	  String token = this.tokenProvider.createToken(loginUser.getUsername());
+    	  System.out.println(authenticationToken);
           return token;
       }
       catch (AuthenticationException e) {
@@ -100,7 +102,7 @@ public class AuthController {
   public String signup(@RequestBody User signupUser) {
 	System.out.println("here");
     if (this.userService.usernameExists(signupUser.getUsername())) {
-      return "EXISTS";
+    	return this.tokenProvider.createToken(signupUser.getUsername());
     }
 
     signupUser.encodePassword(this.passwordEncoder);
@@ -110,7 +112,7 @@ public class AuthController {
   
   @RequestMapping(value = "/getVersion", method= RequestMethod.GET)
   public String getVersion() {
-      return "0.2.3";
+      return "0.2.5";
   }
 
 }

@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,7 +53,8 @@ public class UserController {
     	return findByYearProcedure.getResultList();
     }
     
-    @RequestMapping(value = "/getUserByEmail", method= RequestMethod.GET)
+    @GetMapping(value = "/getUserByEmail")
+    @CrossOrigin
     public User getUserByEmail(@RequestParam(value = "email", defaultValue = "test") String email) {
     	User user = userDao.findByEmailIgnoreCase(email);
     	
@@ -140,7 +142,7 @@ public class UserController {
     @RequestMapping(value = "/getUserGainsToday", method= RequestMethod.GET)
     public BigInteger getUserGainsToday(@RequestParam(value = "userId", defaultValue = "test") int userId) {    	
     	StoredProcedureQuery query =
-                em.createNamedStoredProcedureQuery("getUserGainsMonth");
+                em.createNamedStoredProcedureQuery("getUserGainsToday");
     	query.setParameter("user_id", userId);
     	return (BigInteger)query.getSingleResult();
     }

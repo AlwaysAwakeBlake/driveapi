@@ -15,14 +15,14 @@ public class UserService {
   }
 
   public User lookup(String username) {
-    return this.db.get(username);
+    return this.db.get(username.toLowerCase());
   }
 
   public void save(User user) {
-    this.db.put(user.getUsername(), user);
+    this.db.put(user.getUsername().toLowerCase(), user);
   }
 
   public boolean usernameExists(String username) {
-    return this.db.containsKey(username);
+    return this.db.containsKey(username.toLowerCase());
   }
 }

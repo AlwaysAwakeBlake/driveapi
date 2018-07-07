@@ -11,11 +11,11 @@ public class User {
   private String password;
 
   public String getUsername() {
-    return this.username;
+    return this.username.toLowerCase();
   }
 
   public void setUsername(String username) {
-    this.username = username;
+    this.username = username.toLowerCase();
   }
 
   public String getEmail() {
@@ -31,7 +31,7 @@ public class User {
   }
 
   public void setPassword(String password) {
-    this.password = password;
+    this.password = password.toLowerCase();
   }
 
   public void encodePassword(PasswordEncoder passwordEncoder) {
