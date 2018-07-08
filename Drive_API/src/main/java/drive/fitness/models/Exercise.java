@@ -62,6 +62,9 @@ public class Exercise {
 
 	@Column(name="`variation`")
 	private String variation;
+	
+	@Column(name="`body_lift`")
+	private boolean bodyLift;
 
 	public int getId() {
 		return id;
@@ -93,5 +96,13 @@ public class Exercise {
 
 	public void setVariation(String variation) {
 		this.variation = variation;
+	}
+	
+	public boolean getBodyLift() {
+		return bodyLift;
+	}
+
+	public void setBodyLift(boolean bodyLift) {
+		this.bodyLift = bodyLift;
 	}
 }
