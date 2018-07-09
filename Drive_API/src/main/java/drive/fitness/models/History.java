@@ -23,6 +23,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name="history")
+@NamedStoredProcedureQueries({
+@NamedStoredProcedureQuery(name = "getFlexHistoryByExercise", 
+						   resultClasses=Flexibility.class,
+                           procedureName = "get_flex_history_by_exercise",
+                           parameters = {
+                              @StoredProcedureParameter(mode = ParameterMode.IN, name = "user_id", type = int.class),
+                              @StoredProcedureParameter(mode = ParameterMode.IN, name = "exercise_id", type = int.class),
+                           }),
+@NamedStoredProcedureQuery(name = "getBodyLiftHistoryByExercise", 
+						   resultClasses=BodyLift.class,
+						   procedureName = "get_body_lift_history_by_exercise",
+						   parameters = {
+							   @StoredProcedureParameter(mode = ParameterMode.IN, name = "user_id", type = int.class),
+							   @StoredProcedureParameter(mode = ParameterMode.IN, name = "exercise_id", type = int.class),
+							})
+})
 public class History {
 	
 	@Id

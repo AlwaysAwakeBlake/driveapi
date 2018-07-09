@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -21,9 +23,10 @@ public class Flexibility {
 	@Column(name="minutes")
 	private double minutes;
 	
-	@Column(name="history_id")
-	@JsonProperty("history_id")
-	private int historyId;
+	@OneToOne
+	@JoinColumn(name="history_id")
+	@JsonProperty("History")
+	private History history;
 	
 	public int getId() {
 		return id;
@@ -41,11 +44,11 @@ public class Flexibility {
 		this.minutes = minutes;
 	}
 	
-	public int getHistoryId() {
-		return historyId;
+	public History getHistory() {
+		return history;
 	}
 
-	public void setHistoryId(int historyId) {
-		this.historyId = historyId;
+	public void setHistory(History history) {
+		this.history = history;
 	}   
 }

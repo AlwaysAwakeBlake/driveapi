@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -23,9 +24,10 @@ public class BodyLift {
 	@Column(name="reps")
 	private int reps;
 	
-	@Column(name="history_id")
-	@JsonProperty("history_id")
-	private int historyId;
+	@OneToOne
+	@JoinColumn(name="history_id")
+	@JsonProperty("History")
+	private History history;
 	
 	public int getId() {
 		return id;
@@ -43,11 +45,11 @@ public class BodyLift {
 		this.reps = reps;
 	}
 	
-	public int getHistoryId() {
-		return historyId;
+	public History getHistory() {
+		return history;
 	}
 
-	public void setHistoryId(int historyId) {
-		this.historyId = historyId;
+	public void setHistory(History history) {
+		this.history = history;
 	}
 }
