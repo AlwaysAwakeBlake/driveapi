@@ -1,10 +1,13 @@
 package drive.fitness.security;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletResponse;
 
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,10 +25,14 @@ import org.springframework.web.bind.annotation.RestController;
 import drive.fitness.security.User;
 import drive.fitness.security.UserService;
 import drive.fitness.DriveApiApplication;
+import drive.fitness.dao.BodyLiftDao;
+import drive.fitness.dao.PlatformVersionDao;
 import drive.fitness.security.TokenProvider;
 
 @RestController
 public class AuthController {
+  @PersistenceContext
+  private EntityManager em;
 
   private final UserService userService;
 
@@ -112,7 +119,8 @@ public class AuthController {
   
   @RequestMapping(value = "/getVersion", method= RequestMethod.GET)
   public String getVersion() {
-      return "0.2.5";
+	  String query3 = "SELECT ios FROM platform_version LIMIT 1";
+	  return em.createNativeQuery(query3).getSingleResult().toString();
   }
 
 }
