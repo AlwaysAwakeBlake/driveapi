@@ -1,5 +1,6 @@
 package drive.fitness.controller;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -39,5 +40,12 @@ public class CardioHistoryController {
     @RequestMapping(value = "/getCardioHistoryById", method= RequestMethod.GET)
     public List<CardioHistory> getCardioHistoryById(@RequestParam(value = "userId", defaultValue = "test") int userId) {    	
     	return cardioHistoryDao.getAllCardioHistoryById(userId);
+    }
+    
+    @RequestMapping(value = "/getUserLiftingHistoryBetween", method= RequestMethod.GET)
+    public List<CardioHistory> getUserCardioHistoryBetween(@RequestParam(value = "userId", defaultValue = "test") int userId,
+    													   @RequestParam(value = "startTime", defaultValue = "test") Date startTime,
+    													   @RequestParam(value = "endTime", defaultValue = "test") Date endTime) {
+    	return cardioHistoryDao.getUserCardioHistoryBetween(userId, startTime, endTime);
     }
 }
