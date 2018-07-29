@@ -42,14 +42,9 @@ public class Workout {
 	@Column(name="id", columnDefinition = "serial")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-
-	@Column(name="user_id")
-	private int userId;
 	
-	@OneToMany
-	@JoinColumn(name="user_id")
-	@JsonProperty("user")
-	private User user;
+	@Column(name="users_id")
+	private int userId;
 	
 	@Column(name="start_time")
 	private Date startTime;
@@ -65,12 +60,12 @@ public class Workout {
 		this.id = id;
 	}
 
-	public User getUser() {
-		return user;
+	public int getUserId() {
+		return userId;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUser(int userId) {
+		this.userId = userId;
 	}
 	
 	

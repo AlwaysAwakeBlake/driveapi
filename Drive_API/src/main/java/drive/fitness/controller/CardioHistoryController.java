@@ -42,7 +42,7 @@ public class CardioHistoryController {
     	return cardioHistoryDao.getAllCardioHistoryById(userId);
     }
     
-    @RequestMapping(value = "/getUserLiftingHistoryBetween", method= RequestMethod.GET)
+    @RequestMapping(value = "/getUserCardioHistoryBetween", method= RequestMethod.GET)
     public List<CardioHistory> getUserCardioHistoryBetween(@RequestParam(value = "userId", defaultValue = "test") int userId,
     													   @RequestParam(value = "startTime", defaultValue = "test") Date startTime,
     													   @RequestParam(value = "endTime", defaultValue = "test") Date endTime) {

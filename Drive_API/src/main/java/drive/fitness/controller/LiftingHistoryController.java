@@ -65,6 +65,6 @@ public class LiftingHistoryController {
     													     @RequestParam(value = "startTime", defaultValue = "test") Date startTime,
     													     @RequestParam(value = "endTime", defaultValue = "test") Date endTime) {
         
-    	return liftingHistoryDao.getUserLiftingHistory(userId);
+    	return liftingHistoryDao.getUserLiftingHistoryBetween(userId, startTime, endTime);
     }
 }
