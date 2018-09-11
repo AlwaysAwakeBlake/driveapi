@@ -1,6 +1,7 @@
 package drive.fitness.security;
 import java.io.IOException;
 
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -15,10 +16,14 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
 
 import drive.fitness.DriveApiApplication;
+import drive.fitness.security.TokenProvider;
+
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
+
+
 
 /**
  * Filters incoming requests and installs a Spring Security principal if a header

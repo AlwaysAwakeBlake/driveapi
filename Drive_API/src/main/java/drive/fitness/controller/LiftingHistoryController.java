@@ -9,6 +9,8 @@ import drive.fitness.models.*;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -62,9 +64,18 @@ public class LiftingHistoryController {
     
     @RequestMapping(value = "/getUserLiftingHistoryBetween", method= RequestMethod.GET)
     public List<LiftingHistory> getUserLiftingHistoryBetween(@RequestParam(value = "userId", defaultValue = "test") int userId,
-    													     @RequestParam(value = "startTime", defaultValue = "test") Date startTime,
-    													     @RequestParam(value = "endTime", defaultValue = "test") Date endTime) {
-        
-    	return liftingHistoryDao.getUserLiftingHistoryBetween(userId, startTime, endTime);
+    													     @RequestParam(value = "startTime", defaultValue = "test") String startTime,
+    													     @RequestParam(value = "endTime", defaultValue = "test") String endTime) {
+    	Date start = null;
+    	Date end = null;
+		try {
+			start = new SimpleDateFormat("EEE MMM dd y kk:mm:ss 'GMT'Z (zzzz)").parse(startTime);
+	    	end = new SimpleDateFormat("EEE MMM dd y kk:mm:ss 'GMT'Z (zzzz)").parse(endTime);
+
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return liftingHistoryDao.getUserLiftingHistoryBetween(userId, start, end);
     }
 }

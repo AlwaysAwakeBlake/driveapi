@@ -1,28 +1,20 @@
 package drive.fitness.security;
 
 import javax.servlet.http.HttpServletResponse;
-
-
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import drive.fitness.security.User;
-import drive.fitness.security.UserService;
 import drive.fitness.DriveApiApplication;
-import drive.fitness.security.TokenProvider;
 
 @RestController
 public class AuthController {
@@ -100,8 +92,8 @@ public class AuthController {
 
   @RequestMapping(value = "/signup", method= RequestMethod.POST)
   public String signup(@RequestBody User signupUser) {
-	System.out.println("here");
-    if (this.userService.usernameExists(signupUser.getUsername())) {
+
+	  if (this.userService.usernameExists(signupUser.getUsername())) {
     	return this.tokenProvider.createToken(signupUser.getUsername());
     }
 

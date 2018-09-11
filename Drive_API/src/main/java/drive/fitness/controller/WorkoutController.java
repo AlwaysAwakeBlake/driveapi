@@ -34,16 +34,29 @@ public class WorkoutController {
 		@PersistenceContext
 	    private EntityManager em;
 		
+		@RequestMapping(value = "/getTimelineData", method= RequestMethod.GET)
+		public List<Object> getTimelineData(@RequestParam(value = "userId", defaultValue = "test") int userId,
+			      @RequestParam(value = "startIndex", defaultValue = "test") int startIndex,
+			      @RequestParam(value = "endIndex", defaultValue = "test") int endIndex) {
+			
+			return null;
+			
+		}
+		
 		@RequestMapping(value = "/getCompetingWorkouts", method= RequestMethod.GET)
-	    public List<Workout> getCompetingWorkouts(@RequestParam(value = "userId", defaultValue = "test") String userId,
+	    public List<Workout> getCompetingWorkouts(@RequestParam(value = "userId", defaultValue = "test") int userId,
     										      @RequestParam(value = "startIndex", defaultValue = "test") int startIndex,
-    										      @RequestParam(value = "endIndex", defaultValue = "test") String endIndex) {
+    										      @RequestParam(value = "endIndex", defaultValue = "test") int endIndex) {
 		 	StoredProcedureQuery query =
 	                em.createNamedStoredProcedureQuery("getCompetingWorkouts");
 	    	query.setParameter("user_id", userId);
 	    	query.setParameter("start_index", startIndex);
 	    	query.setParameter("end_index", endIndex);
-	    	return query.getResultList();
+	    	List<Workout> workouts = query.getResultList();
+	    	for(int i = 0; i < workouts.size(); i++) {
+	    		System.out.println(workouts.get(i).getStartTime());
+	    	}
+	    	return workouts;
 	    }
 		
 		@PostMapping(value = "/createWorkout")

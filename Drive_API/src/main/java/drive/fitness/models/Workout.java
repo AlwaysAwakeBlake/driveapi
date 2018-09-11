@@ -29,7 +29,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @NamedStoredProcedureQueries({
 @NamedStoredProcedureQuery(name = "getCompetingWorkouts", 
                            procedureName = "get_competing_workouts",
-                           resultClasses=Exercise.class,
+                           resultClasses=Workout.class,
                            parameters = {
                               @StoredProcedureParameter(mode = ParameterMode.IN, name = "user_id", type = int.class),
                               @StoredProcedureParameter(mode = ParameterMode.IN, name = "start_index", type = int.class),
@@ -43,8 +43,10 @@ public class Workout {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name="users_id")
-	private int userId;
+	@ManyToOne
+	@JoinColumn(name="users_id")
+	@JsonProperty("user")
+	private User user;
 	
 	@Column(name="start_time")
 	private Date startTime;
@@ -60,12 +62,12 @@ public class Workout {
 		this.id = id;
 	}
 
-	public int getUserId() {
-		return userId;
+	public User getUserId() {
+		return user;
 	}
 
-	public void setUser(int userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	
