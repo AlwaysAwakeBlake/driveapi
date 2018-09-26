@@ -1,5 +1,7 @@
 package drive.fitness.models;
 
+
+import java.sql.ResultSet;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,6 +24,9 @@ import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
 
+import org.hibernate.mapping.Array;
+import org.hibernate.mapping.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -31,10 +36,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
                            procedureName = "get_competing_workouts",
                            resultClasses=Workout.class,
                            parameters = {
-                              @StoredProcedureParameter(mode = ParameterMode.IN, name = "user_id", type = int.class),
-                              @StoredProcedureParameter(mode = ParameterMode.IN, name = "start_index", type = int.class),
-                              @StoredProcedureParameter(mode = ParameterMode.IN, name = "end_index", type = int.class),
-                           })
+                               @StoredProcedureParameter(mode = ParameterMode.IN, name = "user_id", type = int.class),
+                               @StoredProcedureParameter(mode = ParameterMode.IN, name = "start_index", type = int.class),
+                               @StoredProcedureParameter(mode = ParameterMode.IN, name = "end_index", type = int.class),
+                           }),
+@NamedStoredProcedureQuery(name = "getTimechartData", 
+						   procedureName = "get_timechart_data",
+						   parameters = {
+							   @StoredProcedureParameter(mode = ParameterMode.IN, name = "work_id", type = int.class),
+						   })
 })
 public class Workout {
 	

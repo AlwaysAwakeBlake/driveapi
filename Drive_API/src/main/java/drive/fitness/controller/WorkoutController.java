@@ -1,6 +1,13 @@
 package drive.fitness.controller;
 
+import java.lang.reflect.Array;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -35,12 +42,46 @@ public class WorkoutController {
 	    private EntityManager em;
 		
 		@RequestMapping(value = "/getTimelineData", method= RequestMethod.GET)
-		public List<Object> getTimelineData(@RequestParam(value = "userId", defaultValue = "test") int userId,
+		public List<List<Object[]>> getTimelineData(@RequestParam(value = "userId", defaultValue = "test") int userId,
 			      @RequestParam(value = "startIndex", defaultValue = "test") int startIndex,
 			      @RequestParam(value = "endIndex", defaultValue = "test") int endIndex) {
+			List<List<Object[]>> timelineData = new ArrayList<>();
+			// Get the workouts to calculate
+			List<Workout> workouts = getCompetingWorkouts(userId, startIndex, endIndex);
+			Iterator<Workout> wi = workouts.iterator();
 			
-			return null;
 			
+			while(wi.hasNext()) {
+				Workout workout = wi.next();
+				
+		    	List<Object[]> workoutData = workoutDao.get_timechart_data(workout.getId());
+		    	BigDecimal totalGains = new BigDecimal(0);
+		    	int chestIndex1 = 0;
+		    	int chestIndex2 = 0;
+		    	for(int i = 0; i < workoutData.size(); i++) {
+		    		System.out.println((BigDecimal)workoutData.get(i)[1]);
+		    		totalGains = totalGains.add((BigDecimal)workoutData.get(i)[1]);
+		    		if (((String) workoutData.get(i)[0]).equals("Chest")) {
+		    			if (chestIndex1 == 0) {
+		    				chestIndex1 = i;
+		    			} else {
+		    				chestIndex2 = i;
+		    			}
+		    		}
+		    	}
+		    	workoutData.get(chestIndex1)[1] = ((BigDecimal)workoutData.get(chestIndex1)[1]).add((BigDecimal)workoutData.get(chestIndex2)[1]);
+		    	workoutData.remove(chestIndex2);
+		    	
+		    	for(int j = 0; j < workoutData.size(); j++) {
+		    		if (((BigDecimal)workoutData.get(j)[1]).compareTo(new BigDecimal(0)) != 0) {
+		    			workoutData.get(j)[1] = (((BigDecimal)workoutData.get(j)[1]).divide(totalGains, 2, RoundingMode.HALF_UP));
+
+			    		System.out.println(workoutData.get(j)[1]);
+		    		}
+		    	}
+		    	timelineData.add(workoutData);
+			}
+			return timelineData;
 		}
 		
 		@RequestMapping(value = "/getCompetingWorkouts", method= RequestMethod.GET)
