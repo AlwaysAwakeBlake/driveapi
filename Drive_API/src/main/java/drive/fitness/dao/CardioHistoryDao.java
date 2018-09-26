@@ -1,5 +1,6 @@
 package drive.fitness.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
@@ -16,4 +17,7 @@ public interface CardioHistoryDao extends CrudRepository<CardioHistory, Integer>
 	
 	@Query("FROM CardioHistory where userId=:userId")
 	public List<CardioHistory> getAllCardioHistoryById(@Param("userId") int userId);
+	
+	@Query("FROM CardioHistory where userId=:userId AND date>=:startTime AND date<=:endTime")
+	public List<CardioHistory> getUserCardioHistoryBetween(@Param("userId") int userId, @Param("startTime") Date startTime, @Param("endTime") Date endTime);
 }

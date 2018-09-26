@@ -1,5 +1,6 @@
 package drive.fitness.dao;
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
@@ -28,4 +29,7 @@ public interface LiftingHistoryDao extends CrudRepository<LiftingHistory, Intege
 	
 	@Query("FROM LiftingHistory where userId=:userId AND exercise.id=:id")
 	public List<LiftingHistory> getLiftingHistoryByExercise(@Param("userId") int userId, @Param("id") int id);
+	
+	@Query("FROM LiftingHistory where userId=:userId AND date>=:startTime AND date<=:endTime")
+	public List<LiftingHistory> getUserLiftingHistoryBetween(@Param("userId") int userId, @Param("startTime") Date startTime, @Param("endTime") Date endTime);
 }

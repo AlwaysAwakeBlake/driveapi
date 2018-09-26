@@ -9,6 +9,9 @@ import drive.fitness.models.*;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,5 +60,22 @@ public class LiftingHistoryController {
     @RequestMapping(value = "/deleteLiftingHistory", method= RequestMethod.POST)
     public void deleteLiftingHistory(@RequestBody LiftingHistory lf) {    	
     	liftingHistoryDao.delete(lf);
+    }
+    
+    @RequestMapping(value = "/getUserLiftingHistoryBetween", method= RequestMethod.GET)
+    public List<LiftingHistory> getUserLiftingHistoryBetween(@RequestParam(value = "userId", defaultValue = "test") int userId,
+    													     @RequestParam(value = "startTime", defaultValue = "test") String startTime,
+    													     @RequestParam(value = "endTime", defaultValue = "test") String endTime) {
+    	Date start = null;
+    	Date end = null;
+		try {
+			start = new SimpleDateFormat("EEE MMM dd y kk:mm:ss 'GMT'Z (zzzz)").parse(startTime);
+	    	end = new SimpleDateFormat("EEE MMM dd y kk:mm:ss 'GMT'Z (zzzz)").parse(endTime);
+
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return liftingHistoryDao.getUserLiftingHistoryBetween(userId, start, end);
     }
 }
