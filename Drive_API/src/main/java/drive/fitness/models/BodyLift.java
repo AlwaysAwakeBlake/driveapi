@@ -24,6 +24,9 @@ public class BodyLift {
 	@Column(name="reps")
 	private int reps;
 	
+	@Column(name="set", nullable = true)
+	private int set;
+	
 	@OneToOne
 	@JoinColumn(name="history_id")
 	@JsonProperty("History")
@@ -43,6 +46,14 @@ public class BodyLift {
 
 	public void setReps(int reps) {
 		this.reps = reps;
+	}
+	
+	public int getSet() {
+		return set;
+	}
+
+	public void setSet(int set) {
+		this.set = set;
 	}
 	
 	public History getHistory() {

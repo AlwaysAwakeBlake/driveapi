@@ -37,6 +37,9 @@ public class LiftingHistory {
 	@Column(name="gains")
 	private int gains;
 	
+	@Column(name="set", nullable = true)
+	private int set;
+	
 	@Column(name="weight")
 	private int weight;
 	
@@ -83,6 +86,14 @@ public class LiftingHistory {
 
 	public void setGains(int gains) {
 		this.gains = gains;
+	}
+	
+	public int getSet() {
+		return set;
+	}
+
+	public void setSet(int set) {
+		this.set = set;
 	}
 	
 	public int getReps() {
