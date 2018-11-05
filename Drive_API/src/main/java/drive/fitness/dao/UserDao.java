@@ -32,5 +32,8 @@ public interface UserDao extends CrudRepository<User, Long>{
 	@Query("FROM User where email=:userEmail")
 	public User findUserByEmail(@Param("userEmail") String userEmail);
 	
+	@Query("FROM User where username LIKE CONCAT('%',:searchTerm,'%')")
+	public List<User> getFilteredUsersSearch(@Param("searchTerm") String searchTerm);
+	
 	public User findByEmailIgnoreCase(@Param("userEmail") String userEmail);
 }

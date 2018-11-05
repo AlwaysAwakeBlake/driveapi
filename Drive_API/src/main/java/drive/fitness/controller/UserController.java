@@ -42,7 +42,30 @@ public class UserController {
 
     @RequestMapping(value = "/getAllUsers", method= RequestMethod.GET)
     public List<User> getAllUsers() {
-        return (List<User>) userDao.findAll();
+    	List<User> users = (List<User>) userDao.findAll();
+    	for (User user : users) {
+    		try {
+				user.setProfilePic("data:image/jpeg;base64," + this.getUserProfilePicString(user.getUsername()));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+        return users;
+    }
+    
+    @RequestMapping(value = "/getFilteredUsersSearch", method= RequestMethod.GET)
+    public List<User> getFilteredUsersSearch(@RequestParam(value = "searchTerm", defaultValue = "test") String searchTerm) {
+    	List<User> users = (List<User>) userDao.getFilteredUsersSearch(searchTerm);
+    	for (User user : users) {
+    		try {
+				user.setProfilePic("data:image/jpeg;base64," + this.getUserProfilePicString(user.getUsername()));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+        return users;
     }
     
     @SuppressWarnings("unchecked")
@@ -173,9 +196,12 @@ public class UserController {
     	return s3Wrapper.download("profile_pics/" + username);
     }
     
+    private String getUserProfilePicString(String username) throws IOException {
+    	return s3Wrapper.download("profile_pics/" + username).getBody();
+    }
+    
     @RequestMapping(value = "/uploadUserProfilePic", method= RequestMethod.POST)
     public void uploadUserProfilePic(@RequestParam(value = "username", defaultValue = "test") String username, @RequestBody String pic) throws IOException {
-    	System.out.println("here");
     	s3Wrapper.uploadImage(pic, "profile_pics/" + username);
     }
 }

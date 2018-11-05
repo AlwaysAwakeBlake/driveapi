@@ -46,6 +46,12 @@ public class ExerciseController {
         return (List<Exercise>) exerciseDao.findAll();
     }
     
+    @RequestMapping(value = "/getFilteredExercisesSearch", method= RequestMethod.GET)
+    public List<Exercise> getFilteredExercisesSearch(@RequestParam(value = "searchTerm", defaultValue = "1") String searchTerm,
+													 @RequestParam(value = "userId", defaultValue = "1") int userId) {
+        return (List<Exercise>) exerciseDao.getFilteredExercisesSearch(searchTerm, userId);
+    }
+    
     @RequestMapping(value = "/getUniqueExercises", method= RequestMethod.GET)
     public List<Exercise> getUniqueExercises(@RequestParam(value = "userID", defaultValue = "0") int userId) {
         return (List<Exercise>) exerciseDao.findAll();

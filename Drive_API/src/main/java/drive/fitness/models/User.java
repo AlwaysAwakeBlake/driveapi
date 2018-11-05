@@ -86,6 +86,8 @@ public class User {
 	private BigInteger gainsMonth;
 	@Transient
 	private BigInteger gainsTotal;
+	@Transient
+	private String profilePic;
 
 	public int getId() {
 		return id;
@@ -189,6 +191,14 @@ public class User {
 
 	public void setGainsTotal(BigInteger gainsTotal) {
 		this.gainsTotal = gainsTotal;
+	}
+	
+	public String getProfilePic() {
+		return this.profilePic;
+	}
+	
+	public void setProfilePic(String profilePic) {
+		this.profilePic = profilePic;
 	}
 
 }
