@@ -31,21 +31,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name="workout")
-@NamedStoredProcedureQueries({
-@NamedStoredProcedureQuery(name = "getCompetingWorkouts", 
-                           procedureName = "get_competing_workouts",
-                           resultClasses=Workout.class,
-                           parameters = {
-                               @StoredProcedureParameter(mode = ParameterMode.IN, name = "user_id", type = int.class),
-                               @StoredProcedureParameter(mode = ParameterMode.IN, name = "start_index", type = int.class),
-                               @StoredProcedureParameter(mode = ParameterMode.IN, name = "end_index", type = int.class),
-                           }),
-@NamedStoredProcedureQuery(name = "getTimechartData", 
-						   procedureName = "get_timechart_data",
-						   parameters = {
-							   @StoredProcedureParameter(mode = ParameterMode.IN, name = "work_id", type = int.class),
-						   })
-})
 public class Workout {
 	
 	@Id
@@ -58,11 +43,7 @@ public class Workout {
 	@JsonProperty("user")
 	private User user;
 	
-	@Column(name="start_time")
-	private Date startTime;
 	
-	@Column(name="end_time")
-	private Date endTime;
 	
 	public int getId() {
 		return id;
@@ -78,22 +59,5 @@ public class Workout {
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-	
-	
-	public Date getStartTime() {
-		return startTime;
-	}
-
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
-	}
-	
-	public Date getEndTime() {
-		return endTime;
-	}
-
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
 	}
 }
