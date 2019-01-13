@@ -19,7 +19,7 @@ public interface HistoryDao extends CrudRepository<History, Integer>{
 	@Procedure(name = "get_flex_history_by_exercise")
 	List<Flexibility> getFlexHistoryByExercise(@Param("userId") int userId, @Param("exerciseId") int exerciseId);
 
-	@Query("FROM History where userId=:userId AND exerciseId=:exerciseId")
+	@Query("FROM History where userId=:userId AND exerciseId=:exerciseId ORDER BY date")
 	List<BodyLift> getHistoryByExercise(@Param("userId") int userId, @Param("exerciseId") int exerciseId);	
 	
 }
