@@ -129,9 +129,8 @@ public class UserController {
     
     @PostMapping(value = "/createUser")
     public User createUser(@RequestBody User user) {
-    	
-        userDao.save(user);
-        return user;
+        User newUser = userDao.save(user);
+        return newUser;
     }
     
     @RequestMapping(value = "/getUserGainsTotal", method= RequestMethod.GET)
