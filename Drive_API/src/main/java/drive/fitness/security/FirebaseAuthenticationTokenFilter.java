@@ -18,6 +18,7 @@ public class FirebaseAuthenticationTokenFilter extends AbstractAuthenticationPro
     private final static String TOKEN_HEADER = "Authorization";
 
     public FirebaseAuthenticationTokenFilter() {
+    	
         super("/**");
     }
     

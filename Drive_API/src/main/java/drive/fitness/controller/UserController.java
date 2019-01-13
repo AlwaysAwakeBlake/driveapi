@@ -129,7 +129,7 @@ public class UserController {
     
     @PostMapping(value = "/createUser")
     public User createUser(@RequestBody User user) {
-    	System.out.println(user.getId());
+    	
         userDao.save(user);
         return user;
     }

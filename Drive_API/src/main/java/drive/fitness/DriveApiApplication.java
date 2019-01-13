@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,14 +41,14 @@ public class DriveApiApplication extends SpringBootServletInitializer{
 	@Bean
 	public FirebaseAuth firebaseAuth() throws IOException {
 		
-		FileInputStream serviceAccount = new FileInputStream(
-				"firebase-adminsdk.json");
+		InputStream serviceAccount = new ClassPathResource("firebase-adminsdk.json").getInputStream();
 
 		FirebaseOptions options = new FirebaseOptions.Builder()
 				.setCredentials(GoogleCredentials.fromStream(serviceAccount))
 				.setDatabaseUrl("https://drive-cadf7.firebaseio.com").build();	
-
-		FirebaseApp.initializeApp(options);
+		if(FirebaseApp.getApps().isEmpty()) { //<--- check with this line
+            FirebaseApp.initializeApp(options);
+        }
 		
 		return FirebaseAuth.getInstance();
 	}

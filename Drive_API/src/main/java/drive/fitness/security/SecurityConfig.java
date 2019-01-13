@@ -32,6 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	public FirebaseAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
 	    FirebaseAuthenticationTokenFilter authenticationTokenFilter = new FirebaseAuthenticationTokenFilter();
+	    
 	    authenticationTokenFilter.setAuthenticationManager(authenticationManager());
 	    authenticationTokenFilter.setAuthenticationSuccessHandler((request, response, authentication) -> {});
 	    return authenticationTokenFilter;
@@ -40,11 +41,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 	    web.ignoring()
-	        .antMatchers(HttpMethod.OPTIONS);
+	        .antMatchers(HttpMethod.OPTIONS)
+	        .and().ignoring().antMatchers("/getUserByUsername")
+	        .and().ignoring().antMatchers("/createUser");
 	}
 
 	@Override
-	protected void configure(HttpSecurity httpSecurity) throws Exception {
+	protected void configure(HttpSecurity httpSecurity) throws Exception {		
 	    httpSecurity
 	            .cors()
 	            .and()
