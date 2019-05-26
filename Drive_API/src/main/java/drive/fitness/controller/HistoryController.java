@@ -1,6 +1,8 @@
 package drive.fitness.controller;
 
 import java.math.BigInteger;
+
+
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -23,8 +25,14 @@ import drive.fitness.models.Flexibility;
 import drive.fitness.models.History;
 import drive.fitness.models.LiftingHistory;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 @RestController
 public class HistoryController {
+	private static final Logger logger = LogManager.getLogger(HistoryController.class);
+
+	
 	@Autowired
 	private HistoryDao historyDao;
 
@@ -38,9 +46,17 @@ public class HistoryController {
     private EntityManager em;
 	
 	@RequestMapping(value = "/addFlexHistory", method= RequestMethod.POST)
-    public int addFlexHistory(@RequestBody History history) { 
-    	historyDao.save(history);
-    	return history.getId();
+    public String addFlexHistory(@RequestBody History history) { 
+    	try {
+    		historyDao.save(history);
+    		return "SUCCESS";
+    	} catch (Exception e) {
+    		logger.info("ERROR ADDING FLEX HISTORY");
+    		logger.info("LIFTING HISTORY USER : " + history.getUserId());
+    		logger.info("LIFTING HISTORY EXERCISE ID: " + history.getExercise().getId());
+    		logger.error(e.getMessage());
+    		return "FAILED";
+    	}
     }
 	
 	@RequestMapping(value = "/addFlex", method= RequestMethod.POST)
@@ -52,15 +68,33 @@ public class HistoryController {
     }
 	
 	@RequestMapping(value = "/addBodyLiftHistory", method= RequestMethod.POST)
-    public int addBodyLiftHistory(@RequestBody History history) {    	
+    public String addBodyLiftHistory(@RequestBody History history) {    	
     	historyDao.save(history);
-    	return history.getId();
+    	try {
+    		historyDao.save(history);
+			return "SUCCESS";
+		} catch (Exception e) {
+			logger.info("ERROR ADDING BODY LIFT HISTORY");
+    		logger.info("LIFTING HISTORY USER : " + history.getUserId());
+    		logger.info("LIFTING HISTORY EXERCISE ID: " + history.getExercise().getId());
+    		logger.error(e.getMessage());
+			return "FAILED";
+		}
     }
 	
 	@RequestMapping(value = "/addBodyLift", method= RequestMethod.POST)
-    public void addBodyLift(@RequestBody BodyLift bl) {   
-		historyDao.save(bl.getHistory());
-		blDao.save(bl);
+    public String addBodyLift(@RequestBody BodyLift bl) {  
+		try {
+			historyDao.save(bl.getHistory());
+			blDao.save(bl);
+			return "SUCCESS";
+		} catch (Exception e) {
+			logger.info("ERROR ADDING BODY LIFT HISTORY");
+    		logger.info("LIFTING HISTORY USER : " + bl.getHistory().getUserId());
+    		logger.info("LIFTING HISTORY EXERCISE ID: " + bl.getHistory().getExercise().getId());
+    		logger.error(e.getMessage());
+			return "FAILED";
+		}
     }
 	
 	@RequestMapping(value = "/removeBodyLift", method= RequestMethod.POST)

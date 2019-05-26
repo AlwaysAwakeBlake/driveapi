@@ -1,0 +1,9 @@
+2019-01-28 23:54:05.091  INFO Matthews-MacBook-Pro.local --- [nio-8080-exec-1] d.f.c.HistoryController                  : TEST
+2019-01-29 00:07:02.649  INFO Matthews-MacBook-Pro.local --- [           main] d.f.c.UserControllerTest                 : Starting UserControllerTest on Matthews-MacBook-Pro.local with PID 1534 (started by dromazmj in /Users/dromazmj/Documents/driveapi/Drive_API)
+2019-01-29 00:07:02.649 DEBUG Matthews-MacBook-Pro.local --- [           main] d.f.c.UserControllerTest                 : Running with Spring Boot v2.0.1.RELEASE, Spring v5.0.5.RELEASE
+2019-01-29 00:07:02.649  INFO Matthews-MacBook-Pro.local --- [           main] d.f.c.UserControllerTest                 : No active profile set, falling back to default profiles: default
+2019-01-29 00:07:04.458  INFO Matthews-MacBook-Pro.local --- [           main] d.f.c.UserControllerTest                 : Started UserControllerTest in 1.874 seconds (JVM running for 19.37)
+2019-01-29 00:07:49.751  INFO Matthews-MacBook-Pro.local --- [           main] d.f.c.UserControllerTest                 : Starting UserControllerTest on Matthews-MacBook-Pro.local with PID 1556 (started by dromazmj in /Users/dromazmj/Documents/driveapi/Drive_API)
+2019-01-29 00:07:49.752 DEBUG Matthews-MacBook-Pro.local --- [           main] d.f.c.UserControllerTest                 : Running with Spring Boot v2.0.1.RELEASE, Spring v5.0.5.RELEASE
+2019-01-29 00:07:49.752  INFO Matthews-MacBook-Pro.local --- [           main] d.f.c.UserControllerTest                 : No active profile set, falling back to default profiles: default
+2019-01-29 00:07:51.417  INFO Matthews-MacBook-Pro.local --- [           main] d.f.c.UserControllerTest                 : Started UserControllerTest in 1.694 seconds (JVM running for 12.428)

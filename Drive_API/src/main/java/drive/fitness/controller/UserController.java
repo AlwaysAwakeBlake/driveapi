@@ -2,6 +2,7 @@ package drive.fitness.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
+
 import com.amazonaws.services.s3.model.PutObjectResult;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import drive.fitness.dao.*;
@@ -14,6 +15,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.http.MediaType;
@@ -26,10 +30,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import drive.fitness.s3.S3Wrapper;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8100")
 public class UserController {
+	private static final Logger logger = LogManager.getLogger(HistoryController.class);
 	
 	@Autowired
 	private S3Wrapper s3Wrapper;
@@ -80,8 +89,6 @@ public class UserController {
     @CrossOrigin
     public User getUserByEmail(@RequestParam(value = "email", defaultValue = "test") String email) {
     	User user = userDao.findByEmailIgnoreCase(email);
-    	
-//    	User user = userDao.findUserByEmail(email);
     	if (user == null) {
     		user = new User();
     		user.setEmail("doesnt_exist");
