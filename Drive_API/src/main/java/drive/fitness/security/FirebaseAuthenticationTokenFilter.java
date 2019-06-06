@@ -1,7 +1,7 @@
 package drive.fitness.security;
 
 import java.io.IOException;
-
+import java.util.concurrent.ExecutionException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.api.client.util.Strings;
+import com.google.firebase.auth.FirebaseAuth;
+
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 
@@ -29,8 +32,15 @@ public class FirebaseAuthenticationTokenFilter extends AbstractAuthenticationPro
         if (Strings.isNullOrEmpty(authToken)) {
             throw new RuntimeException("Invaild auth token");
         }
-        System.out.println(getAuthenticationManager().authenticate(new FirebaseAuthenticationToken(authToken)));
-        return getAuthenticationManager().authenticate(new FirebaseAuthenticationToken(authToken));
+        
+        
+        
+        try {
+			System.out.println(FirebaseAuth.getInstance().verifyIdTokenAsync(authToken, false).get());
+			return getAuthenticationManager().authenticate(new FirebaseAuthenticationToken(authToken));
+		} catch (InterruptedException | ExecutionException e) {
+			throw new InternalAuthenticationServiceException("TOKEN EXPIRED", e);
+		}
     }
     
   /**

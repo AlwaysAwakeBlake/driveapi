@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 import drive.fitness.models.LiftingHistory;
 import drive.fitness.models.User;
+import drive.fitness.models.records.LiftingRecord;
 
 public interface LiftingHistoryDao extends CrudRepository<LiftingHistory, Integer>{ 
 	@Procedure(name = "get_user_gains_total")
@@ -32,4 +33,8 @@ public interface LiftingHistoryDao extends CrudRepository<LiftingHistory, Intege
 	
 	@Query("FROM LiftingHistory where userId=:userId AND date>=:startTime AND date<=:endTime")
 	public List<LiftingHistory> getUserLiftingHistoryBetween(@Param("userId") int userId, @Param("startTime") Date startTime, @Param("endTime") Date endTime);
+
+	@Query(value="SELECT reps, weight, oneRepMax, records "
+			   + "FROM get_lifting_records(:user_id,:exercise_id) AS foo(reps smallint, weight double precision, oneRepMax double precision, records bigint);", nativeQuery=true)
+	public List<Object[]> getLiftingRecords(@Param("user_id") int user_id, @Param("exercise_id") int exercise_id);
 }

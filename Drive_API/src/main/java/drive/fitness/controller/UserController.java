@@ -48,8 +48,15 @@ public class UserController {
 	
 	@PersistenceContext
     private EntityManager em;
+	
+	@CrossOrigin
+	@RequestMapping(value = "/checkAuthentication", method= RequestMethod.GET)
+    public String checkAuthentication() {
+    	return "SUCCESS";
+    }
 
     @RequestMapping(value = "/getAllUsers", method= RequestMethod.GET)
+    @CrossOrigin
     public List<User> getAllUsers() {
     	List<User> users = (List<User>) userDao.findAll();
     	for (User user : users) {
@@ -64,6 +71,7 @@ public class UserController {
     }
     
     @RequestMapping(value = "/getFilteredUsersSearch", method= RequestMethod.GET)
+    @CrossOrigin
     public List<User> getFilteredUsersSearch(@RequestParam(value = "searchTerm", defaultValue = "test") String searchTerm) {
     	List<User> users = (List<User>) userDao.getFilteredUsersSearch(searchTerm);
     	for (User user : users) {
@@ -77,6 +85,7 @@ public class UserController {
         return users;
     }
     
+    @CrossOrigin
     @SuppressWarnings("unchecked")
 	@RequestMapping(value = "/getUsers", method= RequestMethod.GET)
     public List<User> getUsers() {
@@ -97,6 +106,7 @@ public class UserController {
     }
     
     @SuppressWarnings("unchecked")
+    @CrossOrigin
 	@RequestMapping(value = "/getUserCompeting", method= RequestMethod.GET)
     public List<User> getUserCompeting(@RequestParam(value = "userId", defaultValue = "test") int userId) {
     	StoredProcedureQuery query =
@@ -106,6 +116,7 @@ public class UserController {
     }
     
     @SuppressWarnings("unchecked")
+    @CrossOrigin
 	@RequestMapping(value = "/getUserCompetitors", method= RequestMethod.GET)
     public List<User> getUserCompetitors(@RequestParam(value = "userId", defaultValue = "test") int userId) {
     	StoredProcedureQuery query =
@@ -115,16 +126,19 @@ public class UserController {
     }
     
     @RequestMapping(value = "/getUser", method= RequestMethod.GET)
+    @CrossOrigin
     public User getUser(@RequestParam(value = "username", defaultValue = "test") String username) {
     	return userDao.getUser(username);
     }
     
     @RequestMapping(value = "/getUserId", method= RequestMethod.GET)
+    @CrossOrigin
     public int getUserId(@RequestParam(value = "username", defaultValue = "test") String username) {
     	return userDao.getUserId(username);
     }
 
     @RequestMapping(value = "/getUserByUsername", method= RequestMethod.GET)
+    @CrossOrigin
     public User getUserByUsername(@RequestParam(value = "username", defaultValue = "test") String username) {
     	User user = userDao.findByUsername(username);
     	if (user == null) {
@@ -135,12 +149,14 @@ public class UserController {
     }
     
     @PostMapping(value = "/createUser")
+    @CrossOrigin
     public User createUser(@RequestBody User user) {
         User newUser = userDao.save(user);
         return newUser;
     }
     
     @RequestMapping(value = "/getUserGainsTotal", method= RequestMethod.GET)
+    @CrossOrigin
     public BigInteger getUserGainsTotal(@RequestParam(value = "userId", defaultValue = "test") int userId) {
     	StoredProcedureQuery query =
                 em.createNamedStoredProcedureQuery("getUserGainsTotal");
@@ -153,6 +169,7 @@ public class UserController {
     }
     
     @RequestMapping(value = "/getUserGainsWeek", method= RequestMethod.GET)
+    @CrossOrigin
     public BigInteger getUserGainsWeek(@RequestParam(value = "userId", defaultValue = "test") int userId) {
     	StoredProcedureQuery query =
                 em.createNamedStoredProcedureQuery("getUserGainsWeek");
@@ -161,6 +178,7 @@ public class UserController {
     }
     
     @RequestMapping(value = "/getUserGainsMonth", method= RequestMethod.GET)
+    @CrossOrigin
     public BigInteger getUserGainsMonth(@RequestParam(value = "userId", defaultValue = "test") int userId) {    	
     	StoredProcedureQuery query =
                 em.createNamedStoredProcedureQuery("getUserGainsMonth");
@@ -177,6 +195,7 @@ public class UserController {
     }
     
     @RequestMapping(value = "/getLeaderboardData", method= RequestMethod.GET)
+    @CrossOrigin
     public Iterable<User> getLeaderboardData(@RequestParam(value = "userId", defaultValue = "test") int userId) {    	
     	Iterable<User> competingUsers = new ArrayList<User>();
     	competingUsers = this.getUserCompeting(userId);
@@ -198,6 +217,7 @@ public class UserController {
     }
     
     @RequestMapping(value = "/getUserProfilePic", method= RequestMethod.GET)
+    @CrossOrigin
     public @ResponseBody ResponseEntity<String> getUserProfilePic(@RequestParam(value = "username", defaultValue = "test") String username) throws IOException {
     	return s3Wrapper.download("profile_pics/" + username);
     }
@@ -207,6 +227,7 @@ public class UserController {
     }
     
     @RequestMapping(value = "/uploadUserProfilePic", method= RequestMethod.POST)
+    @CrossOrigin
     public void uploadUserProfilePic(@RequestParam(value = "username", defaultValue = "test") String username, @RequestBody String pic) throws IOException {
     	s3Wrapper.uploadImage(pic, "profile_pics/" + username);
     }

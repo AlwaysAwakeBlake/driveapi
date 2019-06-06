@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -46,6 +47,7 @@ public class HistoryController {
     private EntityManager em;
 	
 	@RequestMapping(value = "/addFlexHistory", method= RequestMethod.POST)
+	@CrossOrigin
     public String addFlexHistory(@RequestBody History history) { 
     	try {
     		historyDao.save(history);
@@ -60,6 +62,7 @@ public class HistoryController {
     }
 	
 	@RequestMapping(value = "/addFlex", method= RequestMethod.POST)
+	@CrossOrigin
     public void addFlex(@RequestBody Flexibility flex) { 
 		System.out.println(flex);
 		System.out.println(flex.getHistory());
@@ -68,6 +71,7 @@ public class HistoryController {
     }
 	
 	@RequestMapping(value = "/addBodyLiftHistory", method= RequestMethod.POST)
+	@CrossOrigin
     public String addBodyLiftHistory(@RequestBody History history) {    	
     	historyDao.save(history);
     	try {
@@ -83,6 +87,7 @@ public class HistoryController {
     }
 	
 	@RequestMapping(value = "/addBodyLift", method= RequestMethod.POST)
+	@CrossOrigin
     public String addBodyLift(@RequestBody BodyLift bl) {  
 		try {
 			historyDao.save(bl.getHistory());
@@ -97,6 +102,7 @@ public class HistoryController {
 		}
     }
 	
+	@CrossOrigin
 	@RequestMapping(value = "/removeBodyLift", method= RequestMethod.POST)
     public void removeBodyLift(@RequestBody BodyLift bl) {    
 		History history = bl.getHistory();
@@ -105,6 +111,7 @@ public class HistoryController {
     }
 	
 	@RequestMapping(value = "/removeFlex", method= RequestMethod.POST)
+	@CrossOrigin
     public void removeFlex(@RequestBody Flexibility flex) {
 		History history = flex.getHistory();
 		flexDao.delete(flex);
@@ -112,6 +119,7 @@ public class HistoryController {
     }
 	
 	@SuppressWarnings("unchecked")
+	@CrossOrigin
 	@RequestMapping(value = "/getFlexHistoryByExercise", method= RequestMethod.GET)
     public List<Flexibility> getFlexHistoryByExercise(@RequestParam(value = "userId", defaultValue = "test") int userId, @RequestParam(value = "exerciseId", defaultValue = "test") int exerciseId) {
 		StoredProcedureQuery query =
@@ -122,6 +130,7 @@ public class HistoryController {
     }
 	 
 	@RequestMapping(value = "/getBodyLiftHistoryByExercise", method= RequestMethod.GET)
+	@CrossOrigin
 	public List<BodyLift> getBodyLiftHistoryByExercise(@RequestParam(value = "userId", defaultValue = "test") int userId, @RequestParam(value = "exerciseId", defaultValue = "test") int exerciseId) {
 		StoredProcedureQuery query =
                 em.createNamedStoredProcedureQuery("getBodyLiftHistoryByExercise");
@@ -131,6 +140,7 @@ public class HistoryController {
     }
 	
 	@RequestMapping(value = "/getHistoryByExercise", method= RequestMethod.GET)
+	@CrossOrigin
 	public List<BodyLift> getHistoryByExercise(@RequestParam(value = "userId", defaultValue = "test") int userId, @RequestParam(value = "exerciseId", defaultValue = "test") int exerciseId) {
 		return historyDao.getHistoryByExercise(userId, exerciseId);
     }

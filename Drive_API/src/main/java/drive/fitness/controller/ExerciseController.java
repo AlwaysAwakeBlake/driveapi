@@ -10,6 +10,7 @@ import javax.persistence.StoredProcedureQuery;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,28 +38,33 @@ public class ExerciseController {
 	private UserExercisesDao userExDao;
 
     @RequestMapping(value = "/getExerciseByUserID", method= RequestMethod.GET)
+    @CrossOrigin
     public List<Exercise> getUserByUsername(@RequestParam(value = "userID", defaultValue = "0") int userId) {
         return (List<Exercise>) exerciseDao.getExerciseByUser(userId);
     }
     
     @RequestMapping(value = "/getAllExercises", method= RequestMethod.GET)
+    @CrossOrigin
     public List<Exercise> getAllExercises() {
         return (List<Exercise>) exerciseDao.findAll();
     }
     
     @RequestMapping(value = "/getFilteredExercisesSearch", method= RequestMethod.GET)
+    @CrossOrigin
     public List<Exercise> getFilteredExercisesSearch(@RequestParam(value = "searchTerm", defaultValue = "1") String searchTerm,
 													 @RequestParam(value = "userId", defaultValue = "1") int userId) {
         return (List<Exercise>) exerciseDao.getFilteredExercisesSearch(searchTerm, userId);
     }
     
     @RequestMapping(value = "/getUniqueExercises", method= RequestMethod.GET)
+    @CrossOrigin
     public List<Exercise> getUniqueExercises(@RequestParam(value = "userID", defaultValue = "0") int userId) {
         return (List<Exercise>) exerciseDao.findAll();
     }
 
     @Transactional
     @RequestMapping(value = "/createExercise", method= RequestMethod.POST)
+    @CrossOrigin
     public void createExercise (@RequestBody Exercise ex, @RequestParam(value = "userID", defaultValue = "1") int userId) {
     	System.out.println(ex.getMuscleGroup());
     	StoredProcedureQuery query =
@@ -94,6 +100,7 @@ public class ExerciseController {
     
     @Transactional
     @RequestMapping(value = "/removeExercise", method= RequestMethod.GET)
+    @CrossOrigin
     public void removeExercise (@RequestParam(value = "userID", defaultValue = "1") int userId, @RequestParam(value = "exID", defaultValue = "1") int exId) {
     	String query3 = "DELETE FROM users_exercises WHERE users_id = ?1 AND exercises_id = ?2";
     	em.createNativeQuery(query3)
@@ -103,11 +110,13 @@ public class ExerciseController {
     }
     
     @RequestMapping(value = "/getAllUserEx", method= RequestMethod.GET)
+    @CrossOrigin
     public List<UserExcercises> getAllUserEx() {
         return (List<UserExcercises>) userExDao.findAll();
     }
     
     
+    @CrossOrigin
     @SuppressWarnings("unchecked")
 	@RequestMapping(value = "/getUserExercises", method= RequestMethod.GET)
     public List<Exercise> getUserExercises(@RequestParam(value = "id", defaultValue = "1") int id) {
@@ -118,6 +127,7 @@ public class ExerciseController {
     }
     
     @SuppressWarnings("unchecked")
+    @CrossOrigin
 	@RequestMapping(value = "/getExercise", method= RequestMethod.GET)
     public Exercise getExercise(@RequestParam(value = "muscleGroup", defaultValue = "1") int muscleGroup,
     							@RequestParam(value = "name", defaultValue = "1") String name,

@@ -5,6 +5,7 @@ import drive.fitness.dao.*;
 import drive.fitness.models.*;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,11 +18,13 @@ public class CompetingController {
 	private CompetingDao competingDao;
 
     @RequestMapping(value = "/getAllCompeting", method= RequestMethod.GET)
+    @CrossOrigin
     public List<Competing> getAllCompeting() {
         return (List<Competing>) competingDao.findAll();
     }
     
     @RequestMapping(value = "/getCompeting", method= RequestMethod.GET)
+    @CrossOrigin
     public Competing getCompeting(Competing competing) {
     	Competing local_competing = competingDao.getCompeting(competing.getId(), competing.getCompetingUser());
         if (local_competing == null) {
@@ -33,6 +36,7 @@ public class CompetingController {
     }
     
     @RequestMapping(value = "/createCompeting", method= RequestMethod.POST)
+    @CrossOrigin
     public String createCompeting(@RequestBody Competing competing) {
     	System.out.println(getCompeting(competing).getId());
     	if (getCompeting(competing).getId() == -1) {
@@ -44,6 +48,7 @@ public class CompetingController {
     }
     
     @RequestMapping(value = "/deleteCompeting", method= RequestMethod.POST)
+    @CrossOrigin
     public String deleteCompeting(@RequestBody Competing competing) {
     	if (getCompeting(competing).getId() == -1) {
     		return "doesnt_exists";
